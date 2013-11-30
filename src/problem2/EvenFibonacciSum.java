@@ -6,42 +6,42 @@ import java.util.List;
 
 public class EvenFibonacciSum {
 
-	public static void main(final String... args) {
+    public static void main(final String... args) {
 
-		final List<BigDecimal> fibonacci = getFibonacciSequence();
+	final List<BigDecimal> fibonacci = EvenFibonacciSum.getFibonacciSequence();
 
-		BigDecimal total = BigDecimal.ZERO;
+	BigDecimal total = BigDecimal.ZERO;
 
-		for (final BigDecimal bigDecimal : fibonacci) {
-			if( bigDecimal.intValue() % 2 == 0 ) {
-				total = total.add(bigDecimal);
-			}
-		}
-
-		System.out.println(total);
+	for (final BigDecimal bigDecimal : fibonacci) {
+	    if( bigDecimal.intValue() % 2 == 0 ) {
+		total = total.add(bigDecimal);
+	    }
 	}
 
-	private static List<BigDecimal> getFibonacciSequence() {
-		final List<BigDecimal> fibonacci = new ArrayList<BigDecimal>();
+	System.out.println(total);
+    }
 
-		BigDecimal i = BigDecimal.valueOf(1);
-		BigDecimal j = BigDecimal.valueOf(2);
-		BigDecimal k = BigDecimal.ZERO;
+    private static List<BigDecimal> getFibonacciSequence() {
+	final List<BigDecimal> fibonacci = new ArrayList<BigDecimal>();
 
-		fibonacci.add(i);
-		fibonacci.add(j);
+	BigDecimal i = BigDecimal.valueOf(1);
+	BigDecimal j = BigDecimal.valueOf(2);
+	BigDecimal k = BigDecimal.ZERO;
 
-		do {
-			k = i.add(j);
-			fibonacci.add(k);
+	fibonacci.add(i);
+	fibonacci.add(j);
 
-			i = j;
-			j = k;
-		}
-		while( k.compareTo(BigDecimal.valueOf(4000000)) == -1 );
+	do {
+	    k = i.add(j);
+	    fibonacci.add(k);
 
-		System.out.println(fibonacci);
-
-		return fibonacci;
+	    i = j;
+	    j = k;
 	}
+	while( k.compareTo(BigDecimal.valueOf(4000000)) == -1 );
+
+	System.out.println(fibonacci);
+
+	return fibonacci;
+    }
 }
