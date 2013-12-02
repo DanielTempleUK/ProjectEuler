@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Solution to problem 3:
+ * 
+ * The prime factors of 13195 are 5, 7, 13 and 29.
+ * What is the largest prime factor of the number 600851475143 ?
+ */
 public class HighestPrimeFactor {
 
 	private static final double INPUT = 600851475143d;
@@ -24,7 +30,6 @@ public class HighestPrimeFactor {
 			final double d = input / i;
 
 			if( ( d % 1 ) == 0 ) {
-				System.out.println(i + " is a factor");
 				if(isPrime(i)) {
 					primeFactors.add(i);
 				}
