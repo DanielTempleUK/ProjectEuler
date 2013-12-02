@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import utilities.PrimalityChecker;
+
 /**
  * Solution to problem 3:
  * 
@@ -20,7 +22,6 @@ public class HighestPrimeFactor {
 		findPrimeFactors(INPUT);
 
 		Collections.sort(primeFactors);
-
 		System.out.println(primeFactors.get(primeFactors.size()-1));
 	}
 
@@ -30,27 +31,10 @@ public class HighestPrimeFactor {
 			final double d = input / i;
 
 			if( ( d % 1 ) == 0 ) {
-				if(isPrime(i)) {
+				if(PrimalityChecker.isPrime((long) i)) {
 					primeFactors.add(i);
 				}
 			}
 		}
-	}
-
-	private static boolean isPrime(final double input) {
-		if( input == 2L || input == 3L || input == 5L || input == 7L ) {
-			return true;
-		}
-		if( input < 11) {
-			return false;
-		}
-
-		for ( int i = 2; i <= Math.sqrt(input); i++ ) {
-			if( (input % i) == 0 ) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 }
