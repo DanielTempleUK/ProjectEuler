@@ -1,5 +1,8 @@
 package problem23;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Solution to Problem 23:
  * 
@@ -17,19 +20,96 @@ package problem23;
  */
 public class NonAbundantSums {
 
-
+	private static final int LIMIT = 28123;
 
 	public static void main(final String[] args) {
 
+		final long startTime = System.currentTimeMillis();
 
 
+		final Set<Integer> abundantNumbers = findAbundantNumbersLessThan(LIMIT);
+		System.out.println(abundantNumbers.size() + " Abundant Numbers");
 
 
+		final Set<Integer> allNumbers = getAllNaturalNumbersLessThan(LIMIT);
 
 
+		//Remove all the natural number that are the sum of 2 abundant numbers
+		for (final Integer integer1 : abundantNumbers) {
+			for (final Integer integer2 : abundantNumbers) {
+				allNumbers.remove(integer1 + integer2);
+			}
+		}
+
+		System.out.println(allNumbers.size() + " number that are NOT sums of 2 abundant numbers");
 
 
+		//Total the remaining numbers
+		long total = 0L;
+		for (final Integer integer : allNumbers) {
+			total += integer;
+		}
+
+		System.out.println(total + " is the sum of all numbers that are not the sum of two abundant numbers.");
+
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("This took: " + (endTime - startTime) + " milliseconds");
 	}
 
 
+	/* HELPER METHODS */
+
+	private static Set<Integer> getAllNaturalNumbersLessThan(final int limit) {
+		final Set<Integer> allNumbers = new HashSet<Integer>();
+		for( int i = 0; i < limit; i++ ) {
+			allNumbers.add(i);
+		}
+		return allNumbers;
+	}
+
+	private static Set<Integer> findAbundantNumbersLessThan(final int limit) {
+		final Set<Integer> abundantNumbers = new HashSet<Integer>();
+
+		for( int i = 0; i < limit; i++ ) {
+
+			if (sumOfFactorsOf(i) > i ) {
+				abundantNumbers.add(i);
+			}
+		}
+		return abundantNumbers;
+	}
+
+	private static long sumOfFactorsOf(final int number) {
+		final Set<Integer> factors = getFactorsFor(number);
+
+		int total = 0;
+		for (final Integer factor: factors) {
+			total = total + factor;
+		}
+
+		return total;
+	}
+
+	private static Set<Integer> getFactorsFor(final int number) {
+		final Set<Integer> factors = new HashSet<Integer>();
+		if( number == 0 || number == 1 ) {
+			return factors;
+		}
+		factors.add(1);
+
+		final double numberRoot = Math.sqrt(number);
+		if(numberRoot % 1 == 0) {
+			factors.add( (int) numberRoot );
+		}
+
+		for( int i = 2; i < numberRoot; i++ ) {
+			if(number % i == 0) {
+				factors.add(i);
+				factors.add(number / i);
+			}
+		}
+
+		return factors;
+	}
 }
