@@ -23,29 +23,29 @@ package problem12;
  */
 public class TriangularNumber500Factors {
 
-    public static void main(final String[] args) {
-	long triangleNumber = 0L;
+	public static void main(final String[] args) {
+		long triangleNumber = 0L;
 
-	for( long i = 1; i>0; i++ ) {
-	    triangleNumber = triangleNumber + i;
+		for( long i = 1; i>0; i++ ) {
+			triangleNumber = triangleNumber + i;
 
-	    int numberOfDivisors = 2;
+			int numberOfDivisors = 2;
 
-	    final double triangleNumberRoot = Math.sqrt(triangleNumber);
-	    if(triangleNumberRoot % 1 == 0) {
-		numberOfDivisors++;
-	    }
+			final double triangleNumberRoot = Math.sqrt(triangleNumber);
+			if(triangleNumberRoot % 1 == 0) {
+				numberOfDivisors++;
+			}
 
-	    for( int j = 2; j < triangleNumberRoot; j++ ) {
-		if(triangleNumber % j == 0) {
-		    numberOfDivisors += 2;
+			for( int j = 2; j < triangleNumberRoot; j++ ) {
+				if(triangleNumber % j == 0) {
+					numberOfDivisors += 2;
+				}
+			}
+
+			if(numberOfDivisors > 500) {
+				System.out.println(triangleNumber);
+				break;
+			}
 		}
-	    }
-
-	    if(numberOfDivisors > 500) {
-		System.out.println(triangleNumber);
-		break;
-	    }
 	}
-    }
 }
