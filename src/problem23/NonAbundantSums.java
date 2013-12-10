@@ -34,14 +34,14 @@ public class NonAbundantSums {
 		final Set<Integer> allNumbers = getAllNaturalNumbersLessThan(LIMIT);
 
 
-		//Remove all the natural number that are the sum of 2 abundant numbers
+		//Remove all the natural numbers that are the sum of 2 abundant numbers
 		for (final Integer integer1 : abundantNumbers) {
 			for (final Integer integer2 : abundantNumbers) {
 				allNumbers.remove(integer1 + integer2);
 			}
 		}
 
-		System.out.println(allNumbers.size() + " number that are NOT sums of 2 abundant numbers");
+		System.out.println(allNumbers.size() + " numbers that are NOT sums of 2 abundant numbers");
 
 
 		//Total the remaining numbers
