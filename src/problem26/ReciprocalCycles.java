@@ -26,13 +26,13 @@ public class ReciprocalCycles {
 	public static void main(final String[] args) {
 		final long startTime = System.currentTimeMillis();
 
-		calculateAndPrintSolution();
+		System.out.println( "The answer is: " + calculateSolution() );
 
 		final long endTime = System.currentTimeMillis();
 		System.out.println("This solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
-	private static void calculateAndPrintSolution() {
+	private static int calculateSolution() {
 		int longestSequence = 0;
 		int numberWithLongestSequence = 0;
 
@@ -54,7 +54,6 @@ public class ReciprocalCycles {
 			}
 		}
 
-		System.out.println("The number with the longest recurring cycle is: " + numberWithLongestSequence);
-		System.out.println("The longest recurring cycle is: " + longestSequence);
+		return numberWithLongestSequence;
 	}
 }

@@ -24,9 +24,18 @@ package problem12;
 public class TriangularNumber500Factors {
 
 	public static void main(final String[] args) {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() {
 		long triangleNumber = 0L;
 
-		for( long i = 1; i>0; i++ ) {
+		for( long i = 1; i > 0; i++ ) {
 			triangleNumber = triangleNumber + i;
 
 			int numberOfDivisors = 2;
@@ -43,9 +52,10 @@ public class TriangularNumber500Factors {
 			}
 
 			if(numberOfDivisors > 500) {
-				System.out.println(triangleNumber);
-				break;
+				return triangleNumber;
 			}
 		}
+
+		return 0;
 	}
 }

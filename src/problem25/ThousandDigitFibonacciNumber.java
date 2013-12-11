@@ -29,13 +29,13 @@ public class ThousandDigitFibonacciNumber {
 	public static void main(final String[] args) {
 		final long startTime = System.currentTimeMillis();
 
-		calculateAndPrintSolution();
+		System.out.println( "The answer is: " + calculateSolution() );
 
 		final long endTime = System.currentTimeMillis();
 		System.out.println("This solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
-	private static void calculateAndPrintSolution() {
+	private static String calculateSolution() {
 		BigDecimal i = BigDecimal.valueOf(1);
 		BigDecimal j = BigDecimal.valueOf(1);
 		BigDecimal k = BigDecimal.ZERO;
@@ -48,8 +48,7 @@ public class ThousandDigitFibonacciNumber {
 			i = j;
 			j = k;
 			if( k.toString().length() == 1000) {
-				System.out.println(term.toString());
-				break;
+				return term.toString();
 			}
 		}
 	}

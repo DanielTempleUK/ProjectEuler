@@ -33,16 +33,14 @@ public class QuadraticPrimes {
 	public static void main(final String[] args) {
 		final long startTime = System.currentTimeMillis();
 
-		calculateAndPrintSolution();
+		System.out.println( "The answer is: " + calculateSolution() );
 
 		final long endTime = System.currentTimeMillis();
 		System.out.println("This solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
-	private static void calculateAndPrintSolution() {
+	private static Integer calculateSolution() {
 		Integer mostPrimes = 0;
-		Integer bestA = 0;
-		Integer bestB = 0;
 		Integer product = 0;
 
 		//Since the equation needs to produce a prime number with n=0, then b needs to be prime.
@@ -75,16 +73,11 @@ public class QuadraticPrimes {
 
 				if( numberOfPrimes > mostPrimes ) {
 					mostPrimes = numberOfPrimes;
-					bestA = a;
-					bestB = prime;
 					product = a * prime;
 				}
 			}
 		}
 
-		System.out.println("a = " + bestA);
-		System.out.println("b = " + bestB);
-		System.out.println("n^2 + an + b  give " + mostPrimes + " prime numbers");
-		System.out.println("a * b = " + product);
+		return product;
 	}
 }

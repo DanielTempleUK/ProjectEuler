@@ -13,7 +13,16 @@ import java.util.List;
  */
 public class EvenFibonacciSum {
 
-	public static void main(final String... args) {
+	public static void main(final String[] args) {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static BigDecimal calculateSolution() {
 
 		final List<BigDecimal> fibonacci = EvenFibonacciSum.getFibonacciSequence();
 
@@ -25,7 +34,7 @@ public class EvenFibonacciSum {
 			}
 		}
 
-		System.out.println(total);
+		return total;
 	}
 
 	private static List<BigDecimal> getFibonacciSequence() {
@@ -46,8 +55,6 @@ public class EvenFibonacciSum {
 			j = k;
 		}
 		while( k.compareTo(BigDecimal.valueOf(4000000)) == -1 );
-
-		System.out.println(fibonacci);
 
 		return fibonacci;
 	}

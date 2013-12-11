@@ -1,5 +1,7 @@
 package problem5;
 
+import java.io.IOException;
+
 /**
  * Solution to problem 5:
  * 
@@ -11,7 +13,16 @@ package problem5;
  */
 public class SmallestMultiple {
 
-	public static void main(final String... args) {
+	public static void main(final String[] args) throws IOException {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() {
 		for( int i = 20; i >= 0; i++ ) {
 			boolean dividesByAll1To20 = true;
 			for( int j = 1; j < 21; j++ ) {
@@ -21,9 +32,9 @@ public class SmallestMultiple {
 				}
 			}
 			if (dividesByAll1To20) {
-				System.out.println(i);
-				break;
+				return i;
 			}
 		}
+		return 0L;
 	}
 }

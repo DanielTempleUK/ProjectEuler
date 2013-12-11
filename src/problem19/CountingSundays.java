@@ -21,6 +21,15 @@ public class CountingSundays {
 	private static int[] monthLengths = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 	public static void main(final String[] args) {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() {
 
 		//Start at 2 so that when we do our check of "numberOfDays MOD 7" we get the Sundays. 0 = Sunday, 1 = Monday, 2 = Tuesday
 		//01/01/1901 fell on a Tuesday. FACT
@@ -44,7 +53,7 @@ public class CountingSundays {
 			}
 		}
 
-		System.out.println(numberOfSundaysOnFirstOfTheMonth);
+		return numberOfSundaysOnFirstOfTheMonth;
 	}
 
 	private static boolean isLeap(final long year) {

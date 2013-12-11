@@ -1,5 +1,7 @@
 package problem6;
 
+import java.io.IOException;
+
 /**
  * Solution to Problem 6:
  * 
@@ -15,7 +17,16 @@ package problem6;
  */
 public class SumSquareDifferences {
 
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws IOException {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() {
 
 		long sum = 0;
 		long squareSum = 0;
@@ -27,6 +38,6 @@ public class SumSquareDifferences {
 
 		final long difference = sum * sum - squareSum;
 
-		System.out.println(difference);
+		return difference;
 	}
 }

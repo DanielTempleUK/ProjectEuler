@@ -14,6 +14,15 @@ import utilities.PrimalityChecker;
 public class PrimeSummation {
 
 	public static void main(final String[] args) {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() {
 
 		final List<Long> primes = new ArrayList<Long>();
 
@@ -28,6 +37,6 @@ public class PrimeSummation {
 			total = total + prime;
 		}
 
-		System.out.println(total);
+		return total;
 	}
 }

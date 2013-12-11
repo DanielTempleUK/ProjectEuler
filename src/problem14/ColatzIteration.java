@@ -23,31 +23,40 @@ import java.util.Set;
  */
 public class ColatzIteration {
 
-    public static void main( final String[] args ) {
-	long numberWithLongetSequence = 0;
-	long currentlongestSequence = 0;
+	public static void main(final String[] args) {
+		final long startTime = System.currentTimeMillis();
 
-	for(long i = 1; i<1000001; i++ ) {
-	    final Set<Long> sequence = new HashSet<Long>();
-	    long temp = i;
-	    while( temp != 1 ) {
-		sequence.add(temp);
-		if(temp%2==0) {
-		    temp = temp/2;
-		}
-		else {
-		    temp = 3*temp + 1;
-		}
-	    }
-	    if(temp == 1){
-		sequence.add(temp);
-		if(sequence.size() > currentlongestSequence) {
-		    currentlongestSequence = sequence.size();
-		    numberWithLongetSequence = i;
-		}
-	    }
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
-	System.out.println(numberWithLongetSequence);
-    }
+	private static long calculateSolution() {
+		long numberWithLongetSequence = 0;
+		long currentlongestSequence = 0;
+
+		for(long i = 1; i<1000001; i++ ) {
+			final Set<Long> sequence = new HashSet<Long>();
+			long temp = i;
+			while( temp != 1 ) {
+				sequence.add(temp);
+				if(temp%2==0) {
+					temp = temp/2;
+				}
+				else {
+					temp = 3*temp + 1;
+				}
+			}
+			if(temp == 1){
+				sequence.add(temp);
+				if(sequence.size() > currentlongestSequence) {
+					currentlongestSequence = sequence.size();
+					numberWithLongetSequence = i;
+				}
+			}
+		}
+
+		return numberWithLongetSequence;
+	}
 }

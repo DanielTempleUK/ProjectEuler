@@ -26,13 +26,15 @@ public class NonAbundantSums {
 
 		final long startTime = System.currentTimeMillis();
 
+		System.out.println("The answer is: " + calculateSolution());
 
+		final long endTime = System.currentTimeMillis();
+		System.out.println("This solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() {
 		final Set<Integer> abundantNumbers = findAbundantNumbersLessThan(LIMIT);
-		System.out.println(abundantNumbers.size() + " Abundant Numbers");
-
-
 		final Set<Integer> allNumbers = getAllNaturalNumbersLessThan(LIMIT);
-
 
 		//Remove all the natural numbers that are the sum of 2 abundant numbers
 		for (final Integer integer1 : abundantNumbers) {
@@ -41,24 +43,14 @@ public class NonAbundantSums {
 			}
 		}
 
-		System.out.println(allNumbers.size() + " numbers that are NOT sums of 2 abundant numbers");
-
-
 		//Total the remaining numbers
 		long total = 0L;
 		for (final Integer integer : allNumbers) {
 			total += integer;
 		}
 
-		System.out.println(total + " is the sum of all numbers that are not the sum of two abundant numbers.");
-
-
-		final long endTime = System.currentTimeMillis();
-		System.out.println("This took: " + (endTime - startTime) + " milliseconds");
+		return total;
 	}
-
-
-	/* HELPER METHODS */
 
 	private static Set<Integer> getAllNaturalNumbersLessThan(final int limit) {
 		final Set<Integer> allNumbers = new HashSet<Integer>();

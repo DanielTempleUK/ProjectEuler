@@ -1,5 +1,6 @@
 package problem8;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +52,16 @@ public class HighestProduct {
 			"05886116467109405077541002256983155200055935729725" +
 			"71636269561882670428252483600823257530420752963450";
 
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws IOException {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() {
 		final char[] asList = numbers.toCharArray();
 
 		final List<Integer> numbersList = new ArrayList<Integer>();
@@ -80,6 +90,6 @@ public class HighestProduct {
 
 		}
 
-		System.out.println(biggestProduct);
+		return biggestProduct;
 	}
 }

@@ -10,15 +10,24 @@ import java.math.BigDecimal;
  */
 public class PowerDigitSum {
 
-    public static void main(final String[] args) {
-	final BigDecimal two = BigDecimal.valueOf(2);
-	final BigDecimal power = two.pow(1000);
+	public static void main(final String[] args) {
+		final long startTime = System.currentTimeMillis();
 
-	final char[] digits = power.toString().toCharArray();
-	long total = 0;
-	for(int i=0; i<digits.length; i++) {
-	    total += Long.valueOf(""+digits[i]);
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
-	System.out.println(total);
-    }
+
+	private static long calculateSolution() {
+		final BigDecimal two = BigDecimal.valueOf(2);
+		final BigDecimal power = two.pow(1000);
+
+		final char[] digits = power.toString().toCharArray();
+		long total = 0;
+		for(int i=0; i<digits.length; i++) {
+			total += Long.valueOf(""+digits[i]);
+		}
+		return total;
+	}
 }

@@ -1,5 +1,7 @@
 package problem9;
 
+import java.io.IOException;
+
 /**
  * Solution to Problem 9:
  * 
@@ -12,7 +14,16 @@ package problem9;
  */
 public class PythagoreanTriples {
 
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws IOException {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution()  {
 
 		for( long i = 0; i < 1000; i++ ) {
 			for( long j = 0; j < 1000; j++ ) {
@@ -27,17 +38,15 @@ public class PythagoreanTriples {
 							final long cSquared = (k*k);
 
 							if( aSquaredPlusBSquared == cSquared ) {
-								System.out.println("A is: " + (i));
-								System.out.println("B is: " + (j));
-								System.out.println("C is: " + (k));
-								System.out.println("Product is: " + (i * j * k));
-								break;
+								return (i * j * k);
 							}
 						}
 					}
 				}
 			}
 		}
+
+		return 0L;
 	}
 
 	/**

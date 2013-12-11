@@ -17,6 +17,15 @@ import java.util.Set;
 public class AmicableNumbers {
 
 	public static void main(final String[] args) {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() {
 
 		final Set<Integer> amicableNumbers = new HashSet<Integer>();
 
@@ -45,7 +54,7 @@ public class AmicableNumbers {
 			total += integer;
 		}
 
-		System.out.println(total);
+		return total;
 	}
 
 	private static Set<Integer> getFactorsFor(final int number) {

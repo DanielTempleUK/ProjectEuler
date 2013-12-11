@@ -1,5 +1,7 @@
 package problem4;
 
+import java.io.IOException;
+
 
 /**
  * Solution to problem 4:
@@ -9,7 +11,16 @@ package problem4;
  */
 public class PalindromicNumbers {
 
-	public static void main(final String... args) {
+	public static void main(final String[] args) throws IOException {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() throws IOException {
 
 		long biggestPalindrome = 0;
 
@@ -22,7 +33,7 @@ public class PalindromicNumbers {
 			}
 		}
 
-		System.out.println(biggestPalindrome);
+		return biggestPalindrome;
 	}
 
 	private static boolean isPalindrome(final long number) {

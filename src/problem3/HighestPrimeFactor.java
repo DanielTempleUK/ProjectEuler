@@ -1,5 +1,6 @@
 package problem3;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,22 +17,31 @@ public class HighestPrimeFactor {
 
 	private static final double INPUT = 600851475143d;
 
-	private static final List<Double> primeFactors = new ArrayList<Double>();
+	private static final List<Long> primeFactors = new ArrayList<Long>();
 
-	public static void main(final String... args) {
+	public static void main(final String[] args) throws IOException {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() throws IOException {
 		findPrimeFactors(INPUT);
 
 		Collections.sort(primeFactors);
-		System.out.println(primeFactors.get(primeFactors.size()-1));
+		return primeFactors.get(primeFactors.size()-1);
 	}
 
 	private static void findPrimeFactors(final double input) {
-		for ( double i = 2; i < Math.sqrt(input); i++ ) {
+		for ( long i = 2; i < Math.sqrt(input); i++ ) {
 
 			final double d = input / i;
 
 			if( ( d % 1 ) == 0 ) {
-				if(PrimalityChecker.isPrime((long) i)) {
+				if(PrimalityChecker.isPrime(i)) {
 					primeFactors.add(i);
 				}
 			}

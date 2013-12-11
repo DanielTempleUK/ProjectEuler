@@ -1,5 +1,6 @@
 package problem7;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,16 @@ import java.util.List;
  */
 public class TenThousandAndFirstPrime {
 
-	public static void main(final String[] args) {
+	public static void main(final String[] args) throws IOException {
+		final long startTime = System.currentTimeMillis();
 
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() {
 		final List<Long> primeNumbers = new ArrayList<Long>();
 
 		for( long i = 2; i > 0; i++ ) {
@@ -20,12 +29,12 @@ public class TenThousandAndFirstPrime {
 				primeNumbers.add(i);
 
 				if( primeNumbers.size() == 10001 ) {
-					System.out.println(i);
-					break;
+					return i;
 				}
-				continue;
 			}
 		}
+
+		return 0L;
 	}
 
 	private static boolean isPrime(final long input) {

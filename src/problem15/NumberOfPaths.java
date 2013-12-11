@@ -9,16 +9,25 @@ package problem15;
  */
 public class NumberOfPaths {
 
-    public static void main (final String[] args) {
-	final int gridSize = 20;
+	public static void main(final String[] args) {
+		final long startTime = System.currentTimeMillis();
 
-	long numberOfPaths = 1;
+		System.out.println("The answer is: " + calculateSolution());
 
-	for ( int i = 1; i <= gridSize; i++ ) {
-	    numberOfPaths *= 2*gridSize-i+1;
-	    numberOfPaths /= i;
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
-	System.out.println(numberOfPaths);
-    }
+	private static long calculateSolution() {
+		final int gridSize = 20;
+
+		long numberOfPaths = 1;
+
+		for ( int i = 1; i <= gridSize; i++ ) {
+			numberOfPaths *= 2*gridSize-i+1;
+			numberOfPaths /= i;
+		}
+
+		return numberOfPaths;
+	}
 }

@@ -31,6 +31,15 @@ public class NameScores {
 	}};
 
 	public static void main(final String[] args) throws IOException {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() throws IOException {
 		final BufferedReader reader = new BufferedReader(new FileReader(new File("src/problem22/names.txt")));
 		final String nameString = reader.readLine();
 		reader.close();
@@ -48,7 +57,7 @@ public class NameScores {
 			total += ( alphaValueOf(string) * (names.indexOf(string) + 1) );
 		}
 
-		System.out.println(total);
+		return total;
 	}
 
 	private static int alphaValueOf(final String string) {

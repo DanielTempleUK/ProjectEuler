@@ -20,14 +20,18 @@ public class LexicographicPermutations {
 	public static void main(final String[] args) {
 		final long startTime = System.currentTimeMillis();
 
+		System.out.println( "The answer is: " + calculateSolution() );
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("This solution took: " + (endTime - startTime));
+	}
+
+	private static String calculateSolution() {
 		getPermutationsOf("", "0123456789");
 
 		Collections.sort(permutations);
 
-		System.out.println(permutations.get(999999));
-
-		final long endTime = System.currentTimeMillis();
-		System.out.println("This solution took: " + (endTime - startTime));
+		return permutations.get(999999);
 	}
 
 	private static void getPermutationsOf(final String prefix, final String str) {
