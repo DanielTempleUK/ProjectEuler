@@ -3,7 +3,6 @@ ProjectEuler
 
 Solutions for the Project Euler problems that I done solved.
 
-So far, steady progress on the very first few problems.
+So far, achieved level 1 by completing the first 25 problems.
 
-Code I produce is in Java, but is categorically not the greatest code ever written.
-The majority of my solutions so far have been brute force work.
+Code I produce is in java and is probably not the greatest ever produced, but the solutions do work.
