@@ -1,5 +1,8 @@
 package problem27;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import utilities.PrimalityChecker;
 
 /**
@@ -42,17 +45,30 @@ public class QuadraticPrimes {
 		Integer bestB = 0;
 		Integer product = 0;
 
-		for( int a = -1000; a < 1000; a++ ) {
-			for( int b = -1000; b < 1000; b++ ) {
+		//Since the equation needs to produce a prime number with n=0, then b needs to be prime.
+		//So get the prime numbers below 1000 to start with.
+		final List<Integer> primes = new ArrayList<Integer>();
+		for( int i = 1; i < 1000; i++ ) {
+			if( PrimalityChecker.isPrime(i) ) {
+				primes.add(i);
+			}
+		}
+
+		//Since we're looking for the product (which is a commutative operation) we can use negative numbers
+		//for a and positive ones for b and we will still cover the entire range of possible products.
+		for( int a = -999; a < 1; a++ ) {
+			for( final Integer prime : primes ) {
 
 				Integer numberOfPrimes = 0;
 				for( int n = 0; n > -1; n++ ) {
-					final Long potentialPrime = (long) ((n*n) + (a*n) + b);
+					final Long potentialPrime = (long) ((n*n) + (a*n) + prime);
 
 					if( PrimalityChecker.isPrime(potentialPrime) ) {
 						numberOfPrimes++;
 					}
 					else {
+						//The first result from the formula that isn't a prime number, we can simply break
+						//out of this prime finding loop as the primes need to be for consecutive values of n
 						break;
 					}
 				}
@@ -60,8 +76,8 @@ public class QuadraticPrimes {
 				if( numberOfPrimes > mostPrimes ) {
 					mostPrimes = numberOfPrimes;
 					bestA = a;
-					bestB = b;
-					product = a * b;
+					bestB = prime;
+					product = a * prime;
 				}
 			}
 		}
