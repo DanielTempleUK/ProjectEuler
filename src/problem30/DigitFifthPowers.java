@@ -50,8 +50,6 @@ public class DigitFifthPowers {
 			}
 		}
 
-		System.out.println(numbersThatAreTheSumOfTheirDigitsToTheFifthPower);
-
 		long total = 0L;
 		for (final Integer integer : numbersThatAreTheSumOfTheirDigitsToTheFifthPower) {
 			total += integer;
