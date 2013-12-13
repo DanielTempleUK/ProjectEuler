@@ -1,6 +1,5 @@
 package problem32;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +18,7 @@ import java.util.Set;
  */
 public class PandigitalProducts {
 
-	public static void main(final String[] args) throws IOException {
+	public static void main(final String[] args) {
 		final long startTime = System.currentTimeMillis();
 
 		System.out.println("The answer is: " + calculateSolution());
