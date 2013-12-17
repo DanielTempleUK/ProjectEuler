@@ -3,6 +3,8 @@ package problem38;
 import java.util.HashSet;
 import java.util.Set;
 
+import utilities.PandigitalChecker;
+
 /**
  * Solution to problem 38
  * 
@@ -48,10 +50,9 @@ public class PandigitalMultiples {
 				else if( potentialPandigitalNumber.length() > 9 ) {
 					break;
 				}
-				else if( containsAnyZeros(potentialPandigitalNumber) || containsAnyDuplicateDigits(potentialPandigitalNumber) ) {
-					continue;
+				else if( PandigitalChecker.isPandigital( Long.valueOf( potentialPandigitalNumber ) ) ) {
+					pandigitalMultiples.add(Integer.valueOf(potentialPandigitalNumber));
 				}
-				pandigitalMultiples.add(Integer.valueOf(potentialPandigitalNumber));
 			}
 		}
 
@@ -63,22 +64,5 @@ public class PandigitalMultiples {
 		}
 
 		return largest;
-	}
-
-	private static boolean containsAnyDuplicateDigits(final String digits) {
-		final String[] digitsArray = digits.split("");
-		final Set<String> digitsSet = new HashSet<String>();
-
-		for (final String digit : digitsArray) {
-			if( digitsSet.add(digit) == false ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static boolean containsAnyZeros(final String digits) {
-		return digits.contains("0");
 	}
 }

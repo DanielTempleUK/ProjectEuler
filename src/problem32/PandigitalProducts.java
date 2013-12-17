@@ -3,6 +3,8 @@ package problem32;
 import java.util.HashSet;
 import java.util.Set;
 
+import utilities.PandigitalChecker;
+
 /**
  * Solution to Problem 32:
  * 
@@ -38,11 +40,10 @@ public class PandigitalProducts {
 				final int product = a*b;
 				final String digits = "" + a + "" + b + "" + product;
 
-				if( not9CharactersInLength(digits) || containsAnyZeros(digits) || containsAnyDuplicateDigits(digits) ) {
-					continue;
+				if( nineCharactersInLength(digits) && PandigitalChecker.isPandigital(Long.valueOf(digits)) ) {
+					System.out.println("" + a + " x " + b + " = " + product);
+					pandigitalProducts.add(product);
 				}
-				System.out.println("" + a + " x " + b + " = " + product);
-				pandigitalProducts.add(product);
 			}
 		}
 
@@ -54,24 +55,7 @@ public class PandigitalProducts {
 		return total;
 	}
 
-	private static boolean containsAnyDuplicateDigits(final String digits) {
-		final String[] digitsArray = digits.split("");
-		final Set<String> digitsSet = new HashSet<String>();
-
-		for (final String digit : digitsArray) {
-			if( digitsSet.add(digit) == false ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static boolean containsAnyZeros(final String digits) {
-		return digits.contains("0");
-	}
-
-	private static boolean not9CharactersInLength(final String digits) {
-		return digits.length() != 9;
+	private static boolean nineCharactersInLength(final String digits) {
+		return digits.length() == 9;
 	}
 }
