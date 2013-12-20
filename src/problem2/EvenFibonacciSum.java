@@ -1,6 +1,5 @@
 package problem2;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,39 +21,38 @@ public class EvenFibonacciSum {
 		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
-	private static BigDecimal calculateSolution() {
+	private static long calculateSolution() {
+		final List<Long> fibonacci = EvenFibonacciSum.getFibonacciSequence();
 
-		final List<BigDecimal> fibonacci = EvenFibonacciSum.getFibonacciSequence();
+		long total = 0L;
 
-		BigDecimal total = BigDecimal.ZERO;
-
-		for (final BigDecimal bigDecimal : fibonacci) {
-			if( bigDecimal.intValue() % 2 == 0 ) {
-				total = total.add(bigDecimal);
-			}
+		//Start from index 1 (Fibonacci number is 2) the repeating pattern: EVEN; ODD; ODD; can be observed,
+		//So total up each 3rd indexed number starting with index 1.
+		for (int i = 1; i < fibonacci.size(); i += 3) {
+			total += fibonacci.get(i);
 		}
 
 		return total;
 	}
 
-	private static List<BigDecimal> getFibonacciSequence() {
-		final List<BigDecimal> fibonacci = new ArrayList<BigDecimal>();
+	private static List<Long> getFibonacciSequence() {
+		final List<Long> fibonacci = new ArrayList<Long>();
 
-		BigDecimal i = BigDecimal.valueOf(1);
-		BigDecimal j = BigDecimal.valueOf(2);
-		BigDecimal k = BigDecimal.ZERO;
+		long i = 1L;
+		long j = 2L;
+		long k = 0L;
 
 		fibonacci.add(i);
 		fibonacci.add(j);
 
 		do {
-			k = i.add(j);
+			k = i + j;
 			fibonacci.add(k);
 
 			i = j;
 			j = k;
 		}
-		while( k.compareTo(BigDecimal.valueOf(4000000)) == -1 );
+		while( k < 4000000 );
 
 		return fibonacci;
 	}

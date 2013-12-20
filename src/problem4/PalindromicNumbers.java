@@ -2,7 +2,6 @@ package problem4;
 
 import java.io.IOException;
 
-
 /**
  * Solution to problem 4:
  * 
@@ -22,12 +21,12 @@ public class PalindromicNumbers {
 
 	private static long calculateSolution() throws IOException {
 
-		long biggestPalindrome = 0;
+		long biggestPalindrome = 9009;
 
 		for (int i = 999; i > 99; i-- ) {
 			for( int j = 999; j > 99; j-- ) {
 				final long product = i * j;
-				if ( PalindromicNumbers.isPalindrome(product) && product > biggestPalindrome ) {
+				if ( product > biggestPalindrome && isPalindrome(product) ) {
 					biggestPalindrome = product;
 				}
 			}
@@ -37,21 +36,7 @@ public class PalindromicNumbers {
 	}
 
 	private static boolean isPalindrome(final long number) {
-		final String numberString = String.valueOf(number);
-		String firstHalf;
-		String secondHalf;
-
-		if( numberString.length() % 2 == 0 ) {
-			firstHalf = numberString.substring(0, numberString.length() / 2 );
-			secondHalf = numberString.substring( numberString.length() / 2, numberString.length() );
-		}
-		else {
-			firstHalf = numberString.substring(0, (int)Math.ceil(numberString.length() / 2) );
-			secondHalf = numberString.substring( (int)( Math.ceil(numberString.length() / 2) + 1 ), numberString.length() );
-		}
-
-		final String firstHalfReversed = PalindromicNumbers.reverse(firstHalf);
-		return secondHalf.equals(firstHalfReversed);
+		return String.valueOf(number).equals(reverse(String.valueOf(number)));
 	}
 
 	private static String reverse(final String string) {

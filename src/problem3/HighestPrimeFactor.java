@@ -15,10 +15,6 @@ import utilities.PrimalityChecker;
  */
 public class HighestPrimeFactor {
 
-	private static final double INPUT = 600851475143d;
-
-	private static final List<Long> primeFactors = new ArrayList<Long>();
-
 	public static void main(final String[] args) throws IOException {
 		final long startTime = System.currentTimeMillis();
 
@@ -29,22 +25,26 @@ public class HighestPrimeFactor {
 	}
 
 	private static long calculateSolution() throws IOException {
-		findPrimeFactors(INPUT);
-
+		final List<Long> primeFactors = findPrimeFactors(600851475143L);
 		Collections.sort(primeFactors);
 		return primeFactors.get(primeFactors.size()-1);
 	}
 
-	private static void findPrimeFactors(final double input) {
-		for ( long i = 2; i < Math.sqrt(input); i++ ) {
+	private static List<Long> findPrimeFactors(final long input) {
+		final List<Long> primeFactors = new ArrayList<Long>();
 
-			final double d = input / i;
-
-			if( ( d % 1 ) == 0 ) {
+		double d = input;
+		long i = 1;
+		while( d > 1) {
+			if( ( (d/i) % 1 ) == 0 ) {
 				if(PrimalityChecker.isPrime(i)) {
 					primeFactors.add(i);
+					d = d / i;
 				}
 			}
+			i++;
 		}
+
+		return primeFactors;
 	}
 }
