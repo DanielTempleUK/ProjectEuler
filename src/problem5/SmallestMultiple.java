@@ -7,9 +7,6 @@ import java.io.IOException;
  * 
  * 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
  * What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
- * 
- * 
- * Note: This one does take a little while to run, although it is fully within the 60 second time limit, probably around 10 seconds.
  */
 public class SmallestMultiple {
 
@@ -23,9 +20,15 @@ public class SmallestMultiple {
 	}
 
 	private static long calculateSolution() {
-		for( int i = 20; i >= 0; i++ ) {
+		//Can start from this minimum since the number needs to divide by all of these primes which have no smaller factors.
+		final long minimum = 2*3*5*7*11*13*17*19;
+
+		//Can increment by this minimum value too, to skip the most number of irrelevant numbers in the middle.
+		for( long i = minimum; i >= 0; i+=minimum ) {
 			boolean dividesByAll1To20 = true;
-			for( int j = 1; j < 21; j++ ) {
+
+			//Only need to check 11-20 since all the smaller numbers are factors of these bigger ones.
+			for( int j = 20; j > 10; j-- ) {
 				if( i%j != 0 ) {
 					dividesByAll1To20 = false;
 					break;

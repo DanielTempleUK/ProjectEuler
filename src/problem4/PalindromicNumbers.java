@@ -26,8 +26,13 @@ public class PalindromicNumbers {
 		for (int i = 999; i > 99; i-- ) {
 			for( int j = 999; j > 99; j-- ) {
 				final long product = i * j;
-				if ( product > biggestPalindrome && isPalindrome(product) ) {
-					biggestPalindrome = product;
+				if ( product > biggestPalindrome ) {
+					if( isPalindrome(product) ) {
+						biggestPalindrome = product;
+					}
+				}
+				else {
+					break;
 				}
 			}
 		}

@@ -34,7 +34,7 @@ public class HighestPrimeFactor {
 		final List<Long> primeFactors = new ArrayList<Long>();
 
 		double d = input;
-		long i = 1;
+		long i = 2;
 		while( d > 1) {
 			if( ( (d/i) % 1 ) == 0 ) {
 				if(PrimalityChecker.isPrime(i)) {
