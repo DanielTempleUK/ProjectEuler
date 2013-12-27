@@ -33,7 +33,6 @@ public class PentagonNumbers {
 
 		//Reached this upper limit by trial and error with my solution
 		final List<Long> numbers = generatePentagonalNumbersUnder(10000000L);
-		System.out.println(numbers);
 
 		Integer smallestDifference = 999999999; //arbitrarily large
 

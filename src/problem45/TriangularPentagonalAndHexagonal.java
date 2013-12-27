@@ -1,5 +1,7 @@
 package problem45;
 
+import utilities.NumberChecker;
+
 /**
  *	Solution to problem 45:
  * 
@@ -26,21 +28,11 @@ public class TriangularPentagonalAndHexagonal {
 		long triangularNumber = 40755;
 		for ( long i = 286; i > 0; i++ ) {
 			triangularNumber += i;
-			if( isPentagonal(triangularNumber) && isHexagonal(triangularNumber) ) {
+			if( NumberChecker.isPentagonal(triangularNumber) && NumberChecker.isHexagonal(triangularNumber) ) {
 				return triangularNumber;
 			}
 		}
 
 		return 0L;
-	}
-
-	private static boolean isPentagonal(final long x) {
-		final double n = ((Math.sqrt((24 * x) + 1)) + 1) / 6;
-		return n % 1 == 0;
-	}
-
-	private static boolean isHexagonal(final long x) {
-		final double n = ((Math.sqrt((8 * x) + 1)) + 1) / 4;
-		return n % 1 == 0;
 	}
 }

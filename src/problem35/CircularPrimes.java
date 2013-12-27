@@ -28,17 +28,16 @@ public class CircularPrimes {
 
 	private static long calculateSolution() {
 
-		final Set<Long> potentialCircularPrimes = new HashSet<Long>();
-		for( long i = 101; i < 999999; i++ ) {
-			if( PrimalityChecker.isPrime(i) ) {
+		final Set<Integer> potentialCircularPrimes = new HashSet<Integer>();
+		for( int i = 101; i < 999999; i++ ) {
+			if( !containsAnEvenNumberOrAFive(i) && PrimalityChecker.isPrime(i) ) {
 				potentialCircularPrimes.add(i);
 			}
 		}
 
-		final Set<Long> circularPrimes = new HashSet<Long>();
+		final Set<Integer> circularPrimes = new HashSet<Integer>(potentialCircularPrimes);
 
-		for (final Long prime : potentialCircularPrimes) {
-			boolean isCircularPrime = true;
+		for (final Integer prime : potentialCircularPrimes) {
 			final String primeString = ""+prime;
 			for( int i = 0; i < primeString.length(); i++ ) {
 				final String end = primeString.substring(i);
@@ -46,16 +45,24 @@ public class CircularPrimes {
 				final String cycledPrime = end + beginning;
 
 				if( !PrimalityChecker.isPrime(Long.valueOf(cycledPrime)) ) {
-					isCircularPrime = false;
+					circularPrimes.remove(prime);
 					break;
 				}
-			}
-
-			if( isCircularPrime ) {
-				circularPrimes.add(prime);
 			}
 		}
 
 		return circularPrimes.size() + 13;
+	}
+
+	private static boolean containsAnEvenNumberOrAFive(final int i) {
+		int number = i;
+		while( number > 0 ) {
+			final int d = number % 10;
+			number /= 10;
+			if( d % 2 == 0 || d == 5 ) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

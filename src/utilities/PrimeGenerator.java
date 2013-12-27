@@ -9,6 +9,9 @@ public class PrimeGenerator {
 		return getPrimes( 0, upperLimit);
 	}
 
+	//This prime generator first uses a Sieve of Eratosthenes to get all the primes numbers up to the upper limit
+	//The one added to the list are then limits by the lower limit. Of course, this could be made quicker by not
+	//generating the ones we later discard in the first place, but for now it works OK.
 	private static final List<Long> getPrimes(final int lowerLimit, final int upperLimit ) {
 
 		final Boolean[] primes = new Boolean[upperLimit];

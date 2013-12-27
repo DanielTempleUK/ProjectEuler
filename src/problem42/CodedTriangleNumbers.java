@@ -1,14 +1,11 @@
 package problem42;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import utilities.AlphaNumericValues;
 import utilities.NumberChecker;
+import utilities.ReadFile;
 
 /**
  * Solution to problem 42
@@ -26,12 +23,6 @@ import utilities.NumberChecker;
  */
 public class CodedTriangleNumbers {
 
-	@SuppressWarnings("serial")
-	private static final List<String> letters = new ArrayList<String>(){{
-		add("A");add("B");add("C");add("D");add("E");add("F");add("G");add("H");add("I");add("J");add("K");add("L");add("M");
-		add("N");add("O");add("P");add("Q");add("R");add("S");add("T");add("U");add("V");add("W");add("X");add("Y");add("Z");
-	}};
-
 	public static void main(final String[] args)  throws IOException {
 		final long startTime = System.currentTimeMillis();
 
@@ -42,47 +33,17 @@ public class CodedTriangleNumbers {
 	}
 
 	private static long calculateSolution() throws IOException {
-		final BufferedReader reader = new BufferedReader(new FileReader(new File("src/problem42/words.txt")));
-		final String wordString = reader.readLine();
-		reader.close();
+		final List<String> words = ReadFile.readAndSplit("src/problem42/words.txt");
 
-
-		final String[] namesArray = wordString.split(",");
-		final List<String> words = Arrays.asList(namesArray);
-
-
-		final List<String> codedTriangleNumberWords = new ArrayList<String>();
+		long count = 0L;
 
 		for (final String word : words) {
-			final Integer codedValue = code(word);
+			final Integer codedValue = AlphaNumericValues.alphaValueOf(word);
 			if( NumberChecker.isTriangleNumber(codedValue) ) {
-				codedTriangleNumberWords.add(word);
+				count++;
 			}
 		}
 
-		return codedTriangleNumberWords.size();
-	}
-
-	private static Integer code(final String word) {
-		Integer code = 0;
-
-		final char[] characters = word.toCharArray();
-
-		for( int i = 0; i<characters.length; i++ ) {
-			code += alphaValueOf("" + characters[i]);
-		}
-
-		return code;
-	}
-
-	private static int alphaValueOf(final String string) {
-		final char[] characters = string.toCharArray();
-
-		int total = 0;
-		for( int i = 0; i < characters.length; i++ ) {
-			total += ( letters.indexOf(""+characters[i]) + 1 );
-		}
-
-		return total;
+		return count;
 	}
 }

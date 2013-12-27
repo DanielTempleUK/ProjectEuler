@@ -1,8 +1,6 @@
 package problem37;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 import utilities.PrimalityChecker;
 
@@ -30,20 +28,18 @@ public class TruncatablePrimes {
 
 	private static long calculateSolution() throws IOException {
 
-		final Set<Long> truncatablePrimes = new HashSet<Long>();
-
-		for( long i = 11; i > 10; i++ ) {
-			if( PrimalityChecker.isPrime(i) && isTruncatablePrime(i) ) {
-				truncatablePrimes.add(i);
-			}
-			if(truncatablePrimes.size() == 11) {
-				break;
-			}
-		}
-
 		long total = 0L;
-		for (final Long prime : truncatablePrimes) {
-			total += prime;
+		int count = 0;
+		for( long i = 11; i > 10; i++ ) {
+			if( i < 100 || !containsAnEvenNumberOrAFive(i) ) {
+				if( PrimalityChecker.isPrime(i) && isTruncatablePrime(i) ) {
+					total += i;
+					count++;;
+					if(count == 11) {
+						break;
+					}
+				}
+			}
 		}
 
 		return total;
@@ -62,5 +58,17 @@ public class TruncatablePrimes {
 			}
 		}
 		return true;
+	}
+
+	private static boolean containsAnEvenNumberOrAFive(final long i) {
+		long number = i;
+		while( number > 0 ) {
+			final long d = number % 10;
+			number /= 10;
+			if( d % 2 == 0 || d == 5 ) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -1,13 +1,10 @@
 package problem22;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+
+import utilities.AlphaNumericValues;
+import utilities.ReadFile;
 
 /**
  * Solution to problem 22:
@@ -24,12 +21,6 @@ import java.util.List;
  */
 public class NameScores {
 
-	@SuppressWarnings("serial")
-	private static final List<String> letters = new ArrayList<String>(){{
-		add("A");add("B");add("C");add("D");add("E");add("F");add("G");add("H");add("I");add("J");add("K");add("L");add("M");
-		add("N");add("O");add("P");add("Q");add("R");add("S");add("T");add("U");add("V");add("W");add("X");add("Y");add("Z");
-	}};
-
 	public static void main(final String[] args) throws IOException {
 		final long startTime = System.currentTimeMillis();
 
@@ -40,32 +31,11 @@ public class NameScores {
 	}
 
 	private static long calculateSolution() throws IOException {
-		final BufferedReader reader = new BufferedReader(new FileReader(new File("src/problem22/names.txt")));
-		final String nameString = reader.readLine();
-		reader.close();
-
-		final String[] namesArray = nameString.split(",");
-		final List<String> names = Arrays.asList(namesArray);
-
-		Collections.sort(names);
-		for (String string : names) {
-			string = string.toUpperCase();
-		}
+		final List<String> names = ReadFile.readAndSplit("src/problem22/names.txt");
 
 		long total = 0;
 		for (final String string : names) {
-			total += ( alphaValueOf(string) * (names.indexOf(string) + 1) );
-		}
-
-		return total;
-	}
-
-	private static int alphaValueOf(final String string) {
-		final char[] characters = string.toCharArray();
-
-		int total = 0;
-		for( int i = 0; i < characters.length; i++ ) {
-			total += ( letters.indexOf(""+characters[i]) + 1 );
+			total += ( AlphaNumericValues.alphaValueOf(string) * (names.indexOf(string) + 1) );
 		}
 
 		return total;

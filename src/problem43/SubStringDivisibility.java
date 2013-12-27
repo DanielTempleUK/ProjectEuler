@@ -1,9 +1,7 @@
 package problem43;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Solution to problem 43:
@@ -39,9 +37,9 @@ public class SubStringDivisibility {
 	private static long calculateSolution() {
 		getPermutationsOf("", "0123456789");
 
-		System.out.println("Permutations genrated");
+		System.out.println("Permutations generated");
 
-		final Set<Long> values = new HashSet<Long>();
+		long total = 0L;
 
 		for (final String permutation : permutations) {
 			if( (Integer.valueOf(permutation.substring(1, 4)) % 2) == 0 &&
@@ -51,14 +49,8 @@ public class SubStringDivisibility {
 					(Integer.valueOf(permutation.substring(5, 8)) % 11) == 0 &&
 					(Integer.valueOf(permutation.substring(6, 9)) % 13) == 0 &&
 					(Integer.valueOf(permutation.substring(7, 10)) % 17) == 0 ) {
-				values.add(Long.valueOf(permutation));
-				System.out.println(permutation);
+				total += Long.valueOf(permutation);
 			}
-		}
-
-		long total = 0L;
-		for (final Long number : values) {
-			total += number;
 		}
 
 		return total;
@@ -67,12 +59,12 @@ public class SubStringDivisibility {
 	private static void getPermutationsOf(final String prefix, final String str) {
 		final int n = str.length();
 
-		if (n == 0) {
-			permutations.add(prefix);
+		if (n == 1) {
+			permutations.add(prefix + str);
 		}
 		else {
 			for (int i = 0; i < n; i++) {
-				getPermutationsOf(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n));
+				getPermutationsOf(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1));
 			}
 		}
 	}

@@ -29,19 +29,34 @@ public class PandigitalProducts {
 		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
+	/**
+	 * The only multiplier and multiplicands that result in a 9 digit number (when combined with
+	 * their product) must be 1 digit and 4 digits, or 2 digits and 3 digits) So we have two sets
+	 * of loops. One for each of those options. This limits the search parameter greatly.
+	 * 
+	 * NOTE: I initially had one set of loops that looked at the range 1 to 9876.
+	 */
 	private static long calculateSolution() {
+
 		final Set<Integer> pandigitalProducts = new HashSet<Integer>();
 
-		//There can only be 9 digits in the resulting equation, so the multiplicand and the multiplier must be less than 5 characters each.
-		//Then the digits can appear only once, so the highest multiplier or multiplicand we could use would be 9876
-		for( int a = 1; a <= 9876; a++ ) {
-			//Commutativity of multiplication means we can start at a and cover all the options (4 x 1738 = 1738 x 4)
-			for( int b = a; b <= 9876; b++ ) {
-				final int product = a*b;
+		for( int a = 1; a <= 9; a++ ) {
+			for( int b = 1234; b <= 9876; b++ ) {
+				final int product = a * b;
 				final String digits = "" + a + "" + b + "" + product;
 
 				if( nineCharactersInLength(digits) && PandigitalChecker.isPandigital(Long.valueOf(digits)) ) {
-					System.out.println("" + a + " x " + b + " = " + product);
+					pandigitalProducts.add(product);
+				}
+			}
+		}
+
+		for( int a = 11; a <= 99; a++ ) {
+			for( int b = 123; b <= 987; b++ ) {
+				final int product = a * b;
+				final String digits = "" + a + "" + b + "" + product;
+
+				if( nineCharactersInLength(digits) && PandigitalChecker.isPandigital(Long.valueOf(digits)) ) {
 					pandigitalProducts.add(product);
 				}
 			}

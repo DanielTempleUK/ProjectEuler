@@ -12,16 +12,17 @@ import java.util.Map;
  */
 public class NumberLetterCounts {
 
-	private static final Map<Integer, String> UNITS_LOOKUP = new HashMap<Integer, String>() {
-		private static final long serialVersionUID = 1L;
-		{put(0, ""); put(1, "ONE"); put(2, "TWO"); put(3, "THREE"); put(4, "FOUR");
-		put(5, "FIVE"); put(6, "SIX"); put(7, "SEVEN"); put(8, "EIGHT"); put(9, "NINE"); }
-	};
-	private static final Map<Integer, String> TEENS_LOOKUP = new HashMap<Integer, String>() {
-		private static final long serialVersionUID = 1L;
-		{put(10, "TEN"); put(11, "ELEVEN"); put(12, "TWELVE"); put(13, "THIRTEEN"); put(14, "FOURTEEN");
-		put(15, "FIFTEEN"); put(16, "SIXTEEN"); put(17, "SEVENTEEN"); put(18, "EIGHTEEN"); put(19, "NINETEEN"); }
-	};
+	@SuppressWarnings("serial")
+	private static final Map<Integer, String> UNITS_LOOKUP = new HashMap<Integer, String>() {{
+		put(0, ""); put(1, "ONE"); put(2, "TWO"); put(3, "THREE"); put(4, "FOUR");
+		put(5, "FIVE"); put(6, "SIX"); put(7, "SEVEN"); put(8, "EIGHT"); put(9, "NINE");
+	}};
+
+	@SuppressWarnings("serial")
+	private static final Map<Integer, String> TEENS_LOOKUP = new HashMap<Integer, String>() {{
+		put(10, "TEN"); put(11, "ELEVEN"); put(12, "TWELVE"); put(13, "THIRTEEN"); put(14, "FOURTEEN");
+		put(15, "FIFTEEN"); put(16, "SIXTEEN"); put(17, "SEVENTEEN"); put(18, "EIGHTEEN"); put(19, "NINETEEN");
+	}};
 
 	public static void main(final String[] args) {
 		final long startTime = System.currentTimeMillis();

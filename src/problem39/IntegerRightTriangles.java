@@ -33,15 +33,9 @@ public class IntegerRightTriangles {
 
 			for( int a = 1; a <= p/2; a++ ) {
 				for( int b = a; b <= p/2; b++ ) {
-					for( int c = b; c <= p/2; c++ ) {
-						if( a+b+c == p) {
-							final int aSquared = a*a;
-							final int bSquared = b*b;
-							final int cSquared = c*c;
-							if( aSquared + bSquared == cSquared ) {
-								solutions++;
-							}
-						}
+					final int c = p - b - a;
+					if( (a*a) + (b*b) == (c*c) ) {
+						solutions++;
 					}
 				}
 			}

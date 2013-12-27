@@ -1,9 +1,9 @@
 package problem27;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import utilities.PrimalityChecker;
+import utilities.PrimeGenerator;
 
 /**
  * Solution to problem 27:
@@ -39,23 +39,18 @@ public class QuadraticPrimes {
 		System.out.println("This solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
-	private static Integer calculateSolution() {
+	private static Long calculateSolution() {
 		Integer mostPrimes = 0;
-		Integer product = 0;
+		Long product = 0L;
 
 		//Since the equation needs to produce a prime number with n=0, then b needs to be prime.
 		//So get the prime numbers below 1000 to start with.
-		final List<Integer> primes = new ArrayList<Integer>();
-		for( int i = 1; i < 1000; i++ ) {
-			if( PrimalityChecker.isPrime(i) ) {
-				primes.add(i);
-			}
-		}
+		final List<Long> primes = PrimeGenerator.getPrimesUnder(1000);
 
 		//Since we're looking for the product (which is a commutative operation) we can use negative numbers
 		//for a and positive ones for b and we will still cover the entire range of possible products.
 		for( int a = -999; a < 1; a++ ) {
-			for( final Integer prime : primes ) {
+			for( final Long prime : primes ) {
 
 				Integer numberOfPrimes = 0;
 				for( int n = 0; n > -1; n++ ) {

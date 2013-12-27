@@ -1,9 +1,5 @@
 package problem34;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Solution to Problem 34:
@@ -27,52 +23,35 @@ public class DigitFactorials {
 	}
 
 	private static long calculateSolution() {
-		final Map<String, Long> factorials = getFactorials();
-
-		final Set<Integer> digitFactorials = new HashSet<Integer>();
+		final int[] factorials = getFactorials();
+		long total = 0L;
 
 		//This upper limit is defined from the fact that no 8 digit number can be a factorion, so the longest number
 		//that is a factorion is 7 digits long. Then calculating 7*(9!) = 2540160
-		for(int i = 3; i < 2540160; i++ ) {
-			final String[] digits = ("" + i).split("");
-
-			long factorialSum = 0L;
-			for (final String string : digits) {
-				factorialSum += factorials.get(string);
+		for(int i = 3; i <= 2540160; i++ ) {
+			int number = i;
+			int factorialSum = 0;
+			while( number > 0 ) {
+				final int d = number % 10;
+				number /= 10;
+				factorialSum += factorials[d];
 			}
 
 			if(factorialSum == i) {
-				System.out.println("Sum of Factorial Digits: " + i);
-				digitFactorials.add(i);
+				total += i;
 			}
 		}
 
-		long total = 0L;
-		for (final Integer integer : digitFactorials) {
-			total += integer;
-		}
 		return total;
 	}
 
-	private static Map<String, Long> getFactorials() {
-		final Map<String, Long> factorialSums = new HashMap<String, Long>();
-		for( int i = 0; i < 10; i++ ) {
-			factorialSums.put(""+i, calculateFactorialFor(i));
-		}
-		factorialSums.put("", 0L);
-		return factorialSums;
-	}
+	private static int[] getFactorials() {
+		final int[] factorials = new int[10];
 
-	private static long calculateFactorialFor(final int number) {
-		if(number == 0) {
-			return 1L;
+		factorials[0] = 1;
+		for( int i = 1; i < 10; i++ ) {
+			factorials[i] = i * factorials[i-1];
 		}
-
-		long factorial = 1L;
-		for( int i = 1; i<=number; i++ ) {
-			factorial *= i;
-		}
-
-		return factorial;
+		return factorials;
 	}
 }

@@ -51,7 +51,6 @@ public class DigitCancellingFunctions {
 						for( int i = 1; i < 10; i++ ) {
 
 							if( requiredNumerator.equals(""+(dividedA*i)) && requiredDenominator.equals(""+(dividedB*i)) ) {
-								System.out.println("" + numerator + " / " + denominator +" = " + dividedA*i + " / " + dividedB*i);
 								numerators.add(numerator);
 								denominators.add(denominator);
 							}
