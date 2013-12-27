@@ -15,6 +15,15 @@ import java.math.BigDecimal;
 public class FactorialDigitSum {
 
 	public static void main(final String[] args) {
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	private static long calculateSolution() {
 		long digitsSum = 0L;
 		BigDecimal factorial = BigDecimal.ONE;
 
@@ -28,6 +37,6 @@ public class FactorialDigitSum {
 			digitsSum = digitsSum + Long.valueOf("" + digits[i]);
 		}
 
-		System.out.println(digitsSum);
+		return digitsSum;
 	}
 }

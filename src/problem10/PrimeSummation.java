@@ -1,9 +1,8 @@
 package problem10;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import utilities.PrimalityChecker;
+import utilities.PrimeGenerator;
 
 /**
  * Solution to Problem 10:
@@ -23,18 +22,11 @@ public class PrimeSummation {
 	}
 
 	private static long calculateSolution() {
-
-		final List<Long> primes = new ArrayList<Long>();
-
-		for(long i = 1; i<2000000; i++ ) {
-			if(PrimalityChecker.isPrime(i)) {
-				primes.add(i);
-			}
-		}
+		final List<Long> primes = PrimeGenerator.getPrimesUnder(2000000);
 
 		long total = 0;
 		for (final Long prime : primes) {
-			total = total + prime;
+			total += prime;
 		}
 
 		return total;

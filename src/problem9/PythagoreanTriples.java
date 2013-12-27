@@ -1,7 +1,5 @@
 package problem9;
 
-import java.io.IOException;
-
 /**
  * Solution to Problem 9:
  * 
@@ -14,7 +12,7 @@ import java.io.IOException;
  */
 public class PythagoreanTriples {
 
-	public static void main(final String[] args) throws IOException {
+	public static void main(final String[] args) {
 		final long startTime = System.currentTimeMillis();
 
 		System.out.println("The answer is: " + calculateSolution());
@@ -25,23 +23,12 @@ public class PythagoreanTriples {
 
 	private static long calculateSolution()  {
 
-		for( long i = 0; i < 1000; i++ ) {
-			for( long j = 0; j < 1000; j++ ) {
-				for( long k = 0; k < 1000; k++ ) {
+		for( int a = 1; a < 333; a++ ) {
+			for( int b = a+1; b < 500; b++ ) {
 
-					if( i < j && j < k ) {
-
-						final long total = i + j + k;
-
-						if( total == 1000L ) {
-							final long aSquaredPlusBSquared = (i*i) + (j*j);
-							final long cSquared = (k*k);
-
-							if( aSquaredPlusBSquared == cSquared ) {
-								return (i * j * k);
-							}
-						}
-					}
+				final int c = 1000 - b - a;
+				if( (a*a) + (b*b) == (c*c) ) {
+					return (a * b * c);
 				}
 			}
 		}

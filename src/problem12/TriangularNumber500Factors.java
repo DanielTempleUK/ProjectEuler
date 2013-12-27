@@ -39,16 +39,17 @@ public class TriangularNumber500Factors {
 			triangleNumber = triangleNumber + i;
 
 			int numberOfDivisors = 2;
+			int factor = 2;
 
-			final double triangleNumberRoot = Math.sqrt(triangleNumber);
-			if(triangleNumberRoot % 1 == 0) {
-				numberOfDivisors++;
-			}
-
-			for( int j = 2; j < triangleNumberRoot; j++ ) {
-				if(triangleNumber % j == 0) {
+			//Neat way of benefiting from the sqrt(n) limit on factors without having to calculate the sqrt.
+			//This saved around 20% execution time in this solution compared to calculating the square root.
+			//Thanks to :
+			// http://stackoverflow.com/questions/10139001/what-is-the-fastest-way-in-java-to-get-the-amount-of-factors-a-number-has
+			while( factor * factor <= triangleNumber) {
+				if(triangleNumber % factor == 0) {
 					numberOfDivisors += 2;
 				}
+				factor++;
 			}
 
 			if(numberOfDivisors > 500) {

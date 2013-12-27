@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import utilities.NumberChecker;
+
 /**
  * Solution to problem 42
  * 
@@ -53,19 +55,12 @@ public class CodedTriangleNumbers {
 
 		for (final String word : words) {
 			final Integer codedValue = code(word);
-			if( isTriangleNumber(codedValue) ) {
+			if( NumberChecker.isTriangleNumber(codedValue) ) {
 				codedTriangleNumberWords.add(word);
 			}
 		}
 
 		return codedTriangleNumberWords.size();
-	}
-
-	private static boolean isTriangleNumber(final Integer codedValue) {
-		final Integer times2 = codedValue * 2;
-		final int rootFloor = (int) Math.sqrt(times2);
-
-		return (rootFloor * (rootFloor + 1) * 0.5) == codedValue;
 	}
 
 	private static Integer code(final String word) {

@@ -1,10 +1,8 @@
 package problem14;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Solution to problem 14
+ * 
  * 
  * The following iterative sequence is defined for the set of positive integers:
  * 
@@ -36,11 +34,13 @@ public class ColatzIteration {
 		long numberWithLongetSequence = 0;
 		long currentlongestSequence = 0;
 
-		for(long i = 1; i<1000001; i++ ) {
-			final Set<Long> sequence = new HashSet<Long>();
+		for(long i = 1000000; i > 1; i-- ) {
+
+			long sequenceLength = 0L;
 			long temp = i;
-			while( temp != 1 ) {
-				sequence.add(temp);
+
+			while( temp > 1 ) {
+				sequenceLength++;
 				if(temp%2==0) {
 					temp = temp/2;
 				}
@@ -48,12 +48,10 @@ public class ColatzIteration {
 					temp = 3*temp + 1;
 				}
 			}
-			if(temp == 1){
-				sequence.add(temp);
-				if(sequence.size() > currentlongestSequence) {
-					currentlongestSequence = sequence.size();
-					numberWithLongetSequence = i;
-				}
+
+			if(sequenceLength > currentlongestSequence) {
+				currentlongestSequence = sequenceLength;
+				numberWithLongetSequence = i;
 			}
 		}
 

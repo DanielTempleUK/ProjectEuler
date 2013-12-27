@@ -1,5 +1,8 @@
 package problem17;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * If the numbers 1 to 5 are written out in words: one, two, three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
  * If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?
@@ -8,6 +11,17 @@ package problem17;
  * 115 (one hundred and fifteen) contains 20 letters. The use of "and" when writing out numbers is in compliance with British usage
  */
 public class NumberLetterCounts {
+
+	private static final Map<Integer, String> UNITS_LOOKUP = new HashMap<Integer, String>() {
+		private static final long serialVersionUID = 1L;
+		{put(0, ""); put(1, "ONE"); put(2, "TWO"); put(3, "THREE"); put(4, "FOUR");
+		put(5, "FIVE"); put(6, "SIX"); put(7, "SEVEN"); put(8, "EIGHT"); put(9, "NINE"); }
+	};
+	private static final Map<Integer, String> TEENS_LOOKUP = new HashMap<Integer, String>() {
+		private static final long serialVersionUID = 1L;
+		{put(10, "TEN"); put(11, "ELEVEN"); put(12, "TWELVE"); put(13, "THIRTEEN"); put(14, "FOURTEEN");
+		put(15, "FIFTEEN"); put(16, "SIXTEEN"); put(17, "SEVENTEEN"); put(18, "EIGHTEEN"); put(19, "NINETEEN"); }
+	};
 
 	public static void main(final String[] args) {
 		final long startTime = System.currentTimeMillis();
@@ -30,7 +44,7 @@ public class NumberLetterCounts {
 
 				final Integer hundredDigit = Integer.valueOf("" + numberString.toCharArray()[0]);
 
-				string = string + singleUnitString(hundredDigit);
+				string = string + UNITS_LOOKUP.get(hundredDigit);
 
 				if( i % 100 == 0 ) {
 					string = string + "HUNDRED";
@@ -46,39 +60,10 @@ public class NumberLetterCounts {
 				final Integer number = Integer.valueOf(numberString);
 
 				if( number < 10 ) {
-					string = string + singleUnitString(number);
+					string = string + UNITS_LOOKUP.get(number);
 				}
 				else if( number < 20 ) {
-					if( number == 10 ) {
-						string = string +"TEN";
-					}
-					else if( number == 11 ) {
-						string = string +"ELEVEN";
-					}
-					else if( number == 12 ) {
-						string = string +"TWELVE";
-					}
-					else if( number == 13 ) {
-						string = string +"THIRTEEN";
-					}
-					else if( number == 14 ) {
-						string = string +"FOURTEEN";
-					}
-					else if( number == 15 ) {
-						string = string +"FIFTEEN";
-					}
-					else if( number == 16 ) {
-						string = string +"SIXTEEN";
-					}
-					else if( number == 17 ) {
-						string = string +"SEVENTEEN";
-					}
-					else if( number == 18 ) {
-						string = string +"EIGHTEEN";
-					}
-					else if( number == 19 ) {
-						string = string +"NINETEEN";
-					}
+					string = string + TEENS_LOOKUP.get(number);
 				}
 				else {
 					if( number >= 90 ) {
@@ -111,7 +96,7 @@ public class NumberLetterCounts {
 
 			if (numberString.length() == 1) {
 				final Integer units = Integer.valueOf("" + numberString.toCharArray()[0]);
-				string = string + singleUnitString(units);
+				string = string + UNITS_LOOKUP.get(units);
 			}
 
 			builder.append(string);
@@ -120,36 +105,5 @@ public class NumberLetterCounts {
 		builder.append("ONETHOUSAND");
 
 		return builder.toString().length();
-	}
-
-	private static String singleUnitString(final Integer unit) {
-		if( unit == 1 ) {
-			return "ONE";
-		}
-		else if( unit == 2 ) {
-			return "TWO";
-		}
-		else if( unit == 3 ) {
-			return "THREE";
-		}
-		else if( unit == 4 ) {
-			return "FOUR";
-		}
-		else if( unit == 5 ) {
-			return "FIVE";
-		}
-		else if( unit == 6 ) {
-			return "SIX";
-		}
-		else if( unit == 7 ) {
-			return "SEVEN";
-		}
-		else if( unit == 8 ) {
-			return "EIGHT";
-		}
-		else if( unit == 9 ) {
-			return "NINE";
-		}
-		return ""; //0
 	}
 }

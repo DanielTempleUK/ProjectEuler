@@ -1,8 +1,8 @@
 package problem7;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
+import utilities.PrimalityChecker;
 
 /**
  * Solution to problem 7:
@@ -22,35 +22,17 @@ public class TenThousandAndFirstPrime {
 	}
 
 	private static long calculateSolution() {
-		final List<Long> primeNumbers = new ArrayList<Long>();
+		int primes = 168;
 
-		for( long i = 2; i > 0; i++ ) {
-			if( TenThousandAndFirstPrime.isPrime(i) ) {
-				primeNumbers.add(i);
-
-				if( primeNumbers.size() == 10001 ) {
+		for( long i = 1001; i > 0; i+=2 ) {
+			if(PrimalityChecker.isPrime(i) ) {
+				primes++;
+				if( primes > 10000 ) {
 					return i;
 				}
 			}
 		}
 
 		return 0L;
-	}
-
-	private static boolean isPrime(final long input) {
-		if( input == 2L || input == 3L || input == 5L || input == 7L ) {
-			return true;
-		}
-		if( input < 11) {
-			return false;
-		}
-
-		for ( int i = 2; i <= Math.sqrt(input); i++ ) {
-			if( input % i == 0 ) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 }
