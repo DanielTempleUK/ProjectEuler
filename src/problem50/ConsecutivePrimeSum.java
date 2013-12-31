@@ -1,10 +1,10 @@
 package problem50;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import utilities.PrimalityChecker;
+import utilities.PrimeGenerator;
 
 /**
  * Solution to problem 50:
@@ -31,8 +31,7 @@ public class ConsecutivePrimeSum {
 	}
 
 	private static long calculateSolution() {
-		final List<Long> primes = getPrimes();
-		System.out.println(primes.size());
+		final List<Long> primes = PrimeGenerator.getPrimesUnder(1000000);
 
 		long longestSequence = 0L;
 		long primeWithSequence = 0L;
@@ -40,22 +39,7 @@ public class ConsecutivePrimeSum {
 		for (int i = 0; i < primes.size(); i++) {
 			long total = 0L;
 			long sequence = 0L;
-			for(int j = 0; j <= i; j++) {
-				total = total + primes.get(j);
-				sequence++;
 
-				if(total > 1000000){
-					break;
-				}
-
-				if( PrimalityChecker.isPrime(total) && sequence > longestSequence) {
-					longestSequence = sequence;
-					primeWithSequence = total;
-				}
-			}
-
-			total = 0L;
-			sequence = 0L;
 			for(int j = i; j < primes.size(); j++) {
 				total = total + primes.get(j);
 				sequence++;
@@ -73,15 +57,5 @@ public class ConsecutivePrimeSum {
 
 		System.out.println("Sequence is: " + longestSequence);
 		return primeWithSequence;
-	}
-
-	private static List<Long> getPrimes() {
-		final List<Long> primes = new ArrayList<Long>();
-		for (long i = 1; i <= 1000000; i++) {
-			if( PrimalityChecker.isPrime(i) ) {
-				primes.add(i);
-			}
-		}
-		return primes;
 	}
 }
