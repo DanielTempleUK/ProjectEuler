@@ -1,10 +1,9 @@
 package problem51;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import utilities.PrimalityChecker;
+import utilities.PrimeGenerator;
 
 /**
  * Solution to Problem 51:
@@ -22,54 +21,70 @@ import utilities.PrimalityChecker;
  */
 public class PrimeDigitReplacements {
 
-    public static void main(final String[] args) throws IOException {
-	final long startTime = System.currentTimeMillis();
+	public static void main(final String[] args) throws IOException {
+		final long startTime = System.currentTimeMillis();
 
-	System.out.println("The answer is: " + calculateSolution());
+		System.out.println("The answer is: " + calculateSolution());
 
-	final long endTime = System.currentTimeMillis();
-	System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
-    }
-
-    private static long calculateSolution()  {
-	final List<Long> primes = getPrimes();
-
-	for(final Long prime : primes) {
-	    String primeString = ""+prime;
-	    primeString = "0" + primeString.substring(1);
-	    for (int j = 0; j < 6; j++) {
-		int numberOfPrimes = 0;
-		int numberOfNonPrimes = 0;
-
-		for (int i = 1; i < 10; i++) {
-		    if( numberOfNonPrimes > 2) {
-			break;
-		    }
-		    final char[] charArray = primeString.toCharArray();
-		    charArray[j] = (""+i).toCharArray()[0];
-		    final String replace = new String(charArray);
-		    if( primes.contains(Long.valueOf(replace)) ) {
-			numberOfPrimes++;
-		    }
-		    else {
-			numberOfNonPrimes++;
-		    }
-		}
-		if(numberOfPrimes == 8){
-		    return prime;
-		}
-	    }
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
-	return 0L;
-    }
 
-    private static List<Long> getPrimes() {
-	final List<Long> primes = new ArrayList<Long>();
-	for (long i = 99999; i <= 1000000; i++) {
-	    if( PrimalityChecker.isPrime(i) ) {
-		primes.add(i);
-	    }
+	private static long calculateSolution()  {
+		//I've taken a guess that the number we need will be 5 or 6 digits.
+		final List<Long> primes = PrimeGenerator.getPrimesBetween(10000, 999999);
+
+		//The lowest number in the family must contain 0, 1 or 2 as the repeated digit since there needs to be 8 of them.
+		for (final Long prime : primes) {
+
+			int count = 0;
+			final String primeString = ""+prime;
+			if( repeatedCharacterIs0( primeString ) ) {
+				count++;
+				for (int i = 1; i < 10; i++) {
+					if(primes.contains(Long.valueOf(primeString.replace("0", ""+i)))) {
+						count++;
+					}
+				}
+			}
+
+			else if( repeatedCharacterIs1( primeString ) ) {
+				count++;
+				for (int i = 2; i < 10; i++) {
+					if(primes.contains(Long.valueOf(primeString.replace("1", ""+i)))) {
+						count++;
+					}
+				}
+			}
+
+			else if( repeatedCharacterIs2( primeString ) ) {
+				count++;
+				for (int i = 3; i < 10; i++) {
+					if(primes.contains(Long.valueOf(primeString.replace("2", ""+i)))) {
+						count++;
+					}
+				}
+			}
+
+			if( count == 8 ) {
+				return prime;
+			}
+		}
+
+		return 0L;
 	}
-	return primes;
-    }
+
+	/*
+	 * These repeated character checkers simply remove the repeated character and then check the difference in length.
+	 * We know the difference needs to be 3 because there needs to be 3 repeated characters to produce a family of 8 members.
+	 */
+	private static boolean repeatedCharacterIs0(final String primeString) {
+		return primeString.length() - primeString.replace("0", "").length() == 3;
+	}
+	private static boolean repeatedCharacterIs1(final String primeString) {
+		return primeString.length() - primeString.replace("1", "").length() == 3;
+	}
+	private static boolean repeatedCharacterIs2(final String primeString) {
+		return primeString.length() - primeString.replace("2", "").length() == 3;
+	}
 }
