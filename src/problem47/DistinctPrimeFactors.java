@@ -1,12 +1,11 @@
 package problem47;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import utilities.PrimalityChecker;
+import utilities.PrimeGenerator;
 
 /**
  * Solution to problem 47:
@@ -27,7 +26,7 @@ import utilities.PrimalityChecker;
  */
 public class DistinctPrimeFactors {
 
-	private static final List<Long> primes = getPrimesUnder(1000000L);
+	private static List<Long> primes;
 
 	public static void main(final String[] args) throws IOException {
 		final long startTime = System.currentTimeMillis();
@@ -39,6 +38,8 @@ public class DistinctPrimeFactors {
 	}
 
 	private static long calculateSolution() {
+		primes = PrimeGenerator.getPrimesUnder(1000000);
+
 		Set<Long> primeFactors1 = findPrimeFactors(644);
 		Set<Long> primeFactors2 = findPrimeFactors(645);
 		Set<Long> primeFactors3 = findPrimeFactors(646);
@@ -79,15 +80,5 @@ public class DistinctPrimeFactors {
 		}
 
 		return primeFactors;
-	}
-
-	private static List<Long> getPrimesUnder(final long limit) {
-		final List<Long> primes = new ArrayList<Long>();
-		for (long i = 0; i <= limit; i++) {
-			if( PrimalityChecker.isPrime(i) ) {
-				primes.add(i);
-			}
-		}
-		return primes;
 	}
 }
