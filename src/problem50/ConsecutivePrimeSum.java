@@ -16,8 +16,6 @@ import utilities.PrimeGenerator;
  * 
  * The longest sum of consecutive primes below one-thousand that adds to a prime, contains 21 terms, and is equal to 953.
  * Which prime, below one-million, can be written as the sum of the most consecutive primes?
- * 
- * NOTE: This could do with some optimisation. It takes around 40 seconds to run.
  */
 public class ConsecutivePrimeSum {
 
