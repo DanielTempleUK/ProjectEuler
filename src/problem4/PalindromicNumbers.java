@@ -2,6 +2,8 @@ package problem4;
 
 import java.io.IOException;
 
+import utilities.PalindromicChecker;
+
 /**
  * Solution to problem 4:
  * 
@@ -27,7 +29,7 @@ public class PalindromicNumbers {
 			for( int j = 999; j > 99; j-- ) {
 				final long product = i * j;
 				if ( product > biggestPalindrome ) {
-					if( isPalindrome(product) ) {
+					if( PalindromicChecker.isPalindrome(product) ) {
 						biggestPalindrome = product;
 					}
 				}
@@ -38,20 +40,5 @@ public class PalindromicNumbers {
 		}
 
 		return biggestPalindrome;
-	}
-
-	private static boolean isPalindrome(final long number) {
-		return String.valueOf(number).equals(reverse(String.valueOf(number)));
-	}
-
-	private static String reverse(final String string) {
-		final char[] charArray = string.toCharArray();
-		final char[] temp = new char[string.length()];
-
-		for( int i = 0; i < string.length(); i++ ) {
-			temp[temp.length - 1 - i] = charArray[i];
-		}
-
-		return new String(temp);
 	}
 }
