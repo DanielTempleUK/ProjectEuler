@@ -8,15 +8,16 @@ import java.util.List;
 public class Hand {
 	private static final char[][] STRAIGHTS = {
 		{'2', '3', '4', '5', '6'},
-		{'3', '4', '4', '6', '7'},
-		{'4', '5', '5', '7', '8'},
-		{'5', '6', '6', '8', '9'},
-		{'6', '7', '7', '9', 'T'},
-		{'7', '8', '8', 'J', 'T'},
+		{'3', '4', '5', '6', '7'},
+		{'4', '5', '6', '7', '8'},
+		{'5', '6', '7', '8', '9'},
+		{'6', '7', '8', '9', 'T'},
+		{'7', '8', '9', 'J', 'T'},
 		{'8', '9', 'J', 'Q', 'T'},
 		{'9', 'J', 'K', 'Q', 'T'},
 		{'A', 'J', 'K', 'Q', 'T'}
 	};
+	private static final String orderValues = "23456789TJQKA";
 
 
 	final List<String> cards = new ArrayList<String>();
@@ -39,11 +40,64 @@ public class Hand {
 			return false;
 		}
 
-		if( getHighCardValue() > player2Hand.getHighCardValue() ) {
-			return true;
-		}
+		return beatsInHighCardScenario(player2Hand);
+	}
 
-		return false;
+	/**
+	 * If we get here, we know that the hands are both of the same type.
+	 * This is assumed within the logic of this method.
+	 */
+	private boolean beatsInHighCardScenario(final Hand player2Hand) {
+		final HandType player1HandType = convertHand();
+
+		final int highCardValue = getHighCardValueFrom(getSortedCardValues());
+		final int player2HandHighCardValue = player2Hand.getHighCardValueFrom(player2Hand.getSortedCardValues());
+
+		switch( player1HandType ) {
+		case ROYAL_FLUSH:
+			return false;
+
+		case STRAIGHT_FLUSH:
+			return false;
+
+		case FOUR_OF_A_KIND:
+			return false;
+
+		case FULL_HOUSE:
+
+		case FLUSH:
+			return false;
+
+		case STRAIGHT:
+			return false;
+
+		case THREE_OF_A_KIND:
+			return false;
+
+		case TWO_PAIR:
+			return false;
+
+		case ONE_PAIR:
+			final int pairValue = orderValues.indexOf(getPairValue());
+			final int player2PairValue = orderValues.indexOf(player2Hand.getPairValue());
+
+			if( pairValue != player2PairValue ) {
+				return pairValue > player2PairValue ;
+			}
+
+			final int otherHighCardValue =
+					getHighCardValueFrom(new String(getSortedCardValues()).replace(""+pairValue, "").toCharArray());
+			final int player2HandOtherHighCardValue =
+					player2Hand.getHighCardValueFrom(new String(player2Hand.getSortedCardValues()).replace(""+player2PairValue, "").toCharArray());
+
+			return otherHighCardValue > player2HandOtherHighCardValue;
+
+		case HIGH_CARD:
+			return highCardValue > player2HandHighCardValue;
+
+		default:
+			return false;
+		}
 	}
 
 	public HandType convertHand() {
@@ -51,44 +105,29 @@ public class Hand {
 			return HandType.ROYAL_FLUSH;
 		}
 		if( isStraightFlush() ) {
-			this.highCard = getHighCardValueFrom(getSortedCardValues());
 			return HandType.STRAIGHT_FLUSH;
 		}
 		if( isFourOfAKind() ) {
-			final char fourOfAKindValue = getFourOfAKindValue();
-			this.highCard = new String(getSortedCardValues()).replace(""+fourOfAKindValue, "").toCharArray()[0];
 			return HandType.FOUR_OF_A_KIND;
 		}
 		if( isFullHouse() ) {
-			this.highCard = getHighCardValueFrom(getSortedCardValues());
 			return HandType.FULL_HOUSE;
 		}
 		if( isFlush() ) {
-			this.highCard = getHighCardValueFrom(getSortedCardValues());
 			return HandType.FLUSH;
 		}
 		if( isStraight() ) {
-			this.highCard = getHighCardValueFrom(getSortedCardValues());
 			return HandType.STRAIGHT;
 		}
 		if( isThreeOfAKind() ) {
-			final char threeOfAKindValue = getThreeOfAKindValue();
-			this.highCard = new String(getSortedCardValues()).replace(""+threeOfAKindValue, "").toCharArray()[0];
 			return HandType.THREE_OF_A_KIND;
 		}
 		if( isTwoPair() ) {
-			final char pairValue = getPairValue();
-			final char[] onePairMissing = new String(getSortedCardValues()).replace(""+pairValue, "").toCharArray();
-			final char secondPairValue = getPairValueFrom(onePairMissing);
-			this.highCard = new String(onePairMissing).replace(""+secondPairValue, "").toCharArray()[0];
 			return HandType.TWO_PAIR;
 		}
 		if( isOnePair() ) {
-			final char pairValue = getPairValue();
-			this.highCard = new String(getSortedCardValues()).replace(""+pairValue, "").toCharArray()[0];
 			return HandType.ONE_PAIR;
 		}
-		this.highCard = getHighCardValueFrom(getSortedCardValues());
 		return HandType.HIGH_CARD;
 	}
 
@@ -135,11 +174,10 @@ public class Hand {
 	}
 
 	public int getHighCardValueFrom(final char[] sortedCardValues) {
-		final String orderValues = "23456789TJQKA";
 		int highestValue = orderValues.indexOf(sortedCardValues[0]);
 
 		for (int i = 1; i < sortedCardValues.length; i++) {
-			if( orderValues.indexOf(sortedCardValues[i]) > orderValues.indexOf(highestValue) ) {
+			if( orderValues.indexOf(sortedCardValues[i]) > highestValue ) {
 				highestValue = orderValues.indexOf(sortedCardValues[i]);
 			}
 		}
@@ -238,13 +276,11 @@ public class Hand {
 	}
 
 	public boolean isStraight() {
-		if( isFlush() ) {
-			final char[] cardValues = getSortedCardValues();
+		final char[] cardValues = getSortedCardValues();
 
-			for(int i = 0; i < STRAIGHTS.length; i++) {
-				if( Arrays.equals(cardValues, STRAIGHTS[i]) ) {
-					return true;
-				}
+		for(int i = 0; i < STRAIGHTS.length; i++) {
+			if( Arrays.equals(cardValues, STRAIGHTS[i]) ) {
+				return true;
 			}
 		}
 		return false;
@@ -273,5 +309,10 @@ public class Hand {
 
 	public int getHighCardValue() {
 		return this.highCard;
+	}
+
+	@Override
+	public String toString() {
+		return this.cards.toString();
 	}
 }

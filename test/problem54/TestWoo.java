@@ -22,6 +22,18 @@ public class TestWoo {
 	}
 
 	@Test
+	public void testStraight23456() {
+		final Hand hand = new Hand();
+		hand.addCard("2H");
+		hand.addCard("3H");
+		hand.addCard("4H");
+		hand.addCard("5C");
+		hand.addCard("6H");
+
+		assertTrue(hand.isStraight());
+	}
+
+	@Test
 	public void testFlush() {
 		final Hand hand = new Hand();
 		hand.addCard("2S");
