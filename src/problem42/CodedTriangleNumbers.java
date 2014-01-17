@@ -33,7 +33,7 @@ public class CodedTriangleNumbers {
 	}
 
 	private static long calculateSolution() throws IOException {
-		final List<String> words = ReadFile.readAndSplit("src/problem42/words.txt");
+		final List<String> words = ReadFile.readSplitAndSort("src/problem42/words.txt");
 
 		long count = 0L;
 

@@ -35,12 +35,18 @@ public class SpiralPrimes {
 		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
+	/**
+	 * Used the same formulas as in problem 28 to calculate the numbers on the corners.
+	 * Then simply check the ones that aren't square numbers for primality.
+	 * Then the obligatory check for the ratio dropping below 10.
+	 */
 	private static long calculateSolution() {
 		double totalNumberOfPrimes = 0;
 		double totalNumberOfNumbersOnDiagonals = 1;
 
-		for( int n = 1; n > 0; n++ ) {
-			final long squareNumberInBottomRightCorner = ( (2*n) + 1 ) * ( (2*n) + 1 );
+		for( int n = 1; true; n++ ) {
+			final int twoNPlusOne = (n*2) + 1;
+			final long squareNumberInBottomRightCorner = twoNPlusOne * twoNPlusOne;
 
 			if( PrimalityChecker.isPrime( (squareNumberInBottomRightCorner - (2*n) ) ) ) {
 				totalNumberOfPrimes++;
@@ -56,11 +62,9 @@ public class SpiralPrimes {
 
 			totalNumberOfNumbersOnDiagonals += 4;
 
-			final double ratio = totalNumberOfPrimes / totalNumberOfNumbersOnDiagonals;
-			if( ( ratio * 100) < 10 ) {
-				return (n*2) + 1;
+			if( (totalNumberOfPrimes / totalNumberOfNumbersOnDiagonals) < 0.1 ) {
+				return twoNPlusOne;
 			}
 		}
-		return 0L;
 	}
 }

@@ -12,23 +12,41 @@ import java.util.List;
 public class ReadFile {
 
 	/**
-	 * Assumes the file is a single line and the separator is a comma.
+	 * Delimiter is a comma.
+	 * The results are sorted alphabetically.
+	 */
+	public static List<String> readSplitAndSort(final String fileName) {
+		return readSplitAndSort(fileName, ",", true);
+	}
+
+	/**
+	 * Delimiter is a comma.
+	 * Results are not sorted.
 	 */
 	public static List<String> readAndSplit(final String fileName) {
+		return readSplitAndSort(fileName, ",", false);
+	}
+
+	/**
+	 * Assumes the file is a single line.
+	 */
+	private static List<String> readSplitAndSort(final String fileName, final String delimiter, final boolean sort) {
 		BufferedReader reader;
 		try {
 			reader = new BufferedReader( new FileReader( new File(fileName) ) );
 			final String fileString = reader.readLine();
 			reader.close();
 
-			final String[] wordsArray = fileString.split(",");
+			final String[] wordsArray = fileString.split(delimiter);
 			final List<String> wordsList = Arrays.asList(wordsArray);
 
 			for (String string : wordsList) {
 				string = string.toUpperCase();
 			}
 
-			Collections.sort(wordsList);
+			if( sort ) {
+				Collections.sort(wordsList);
+			}
 			return wordsList;
 		}
 		catch (final FileNotFoundException e) {

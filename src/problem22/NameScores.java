@@ -31,7 +31,7 @@ public class NameScores {
 	}
 
 	private static long calculateSolution() throws IOException {
-		final List<String> names = ReadFile.readAndSplit("src/problem22/names.txt");
+		final List<String> names = ReadFile.readSplitAndSort("src/problem22/names.txt");
 
 		long total = 0;
 		for (final String string : names) {
