@@ -1,11 +1,7 @@
 package problem60;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import utilities.PrimalityChecker;
 import utilities.PrimeGenerator;
@@ -20,109 +16,51 @@ import utilities.PrimeGenerator;
  * represents the lowest sum for a set of four primes with this property.
  * 
  * Find the lowest sum for a set of five primes for which any two primes concatenate to produce another prime.
+ * 
+ * TODO: This solution takes around 15 seconds to execute, perhaps there is a better way....
  */
 public class PrimePairSets {
 
-	private static final long startTime = System.currentTimeMillis();
+	private static final boolean[][] hasProperty = new boolean[10000][10000];
+	private static List<Long> allPrimes;
+	private static int allPrimesSize;
 
 	public static void main(final String[] args) {
-		System.out.println("The answer is: " + calculateSolution2());
+		final long startTime = System.currentTimeMillis();
+
+		System.out.println("The answer is: " + calculateSolution());
 
 		final long endTime = System.currentTimeMillis();
 		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
 	private static long calculateSolution() {
-		final List<Long> allPrimes = PrimeGenerator.getPrimesUnder(10000);
-		allPrimes.remove(2L); //Even numbers aren't prime.
-		allPrimes.remove(5L); //Numbers ending with a 5 aren't prime.
+		//Guessed the primes in the set would be less that 10000.
+		allPrimes = PrimeGenerator.getPrimesUnder(10000);
+		//Storing this size avoids ahving to recalculate it as we use it for a loop limit quite a lot.
+		allPrimesSize = allPrimes.size();
 
-		System.out.println("GENERATED PRIMES in: " + (System.currentTimeMillis() - startTime) + " milliseconds");
+		List<List<Long>> primePairSets = computeCardinality2PrimePairSetsAndStorePrimalities();
 
-		final Map<Long, Set<Long>> map = new HashMap<Long, Set<Long>>();
-		final int size = allPrimes.size() ;
-		for(int a = 0; a < size; a++ ) {
-			final long prime1 = allPrimes.get(a);
-			final HashSet<Long> primePairs = new HashSet<Long>();
-
-			for(int b = 0; b < size; b++ ) {
-				if (a == b) {
-					continue;
-				}
-				final long prime2 = allPrimes.get(b);
-
-				final Long primePlusPrime1 = Long.valueOf("" + prime1 + "" + prime2);
-				final Long primePlusPrime2 = Long.valueOf("" + prime2 + "" + prime1);
-
-				if( PrimalityChecker.isPrime(primePlusPrime1) && PrimalityChecker.isPrime(primePlusPrime2) ) {
-					primePairs.add(prime2);
-				}
-			}
-			if( primePairs.size() > 4 ) {
-				map.put(prime1, primePairs);
-			}
+		for( int i = 2; i < 5; i++ ) {
+			primePairSets = computeNextCardinalPrimePairSets(primePairSets);
 		}
 
-		System.out.println("PAIR SETS GENERATED in: " + (System.currentTimeMillis() - startTime) + " milliseconds");
-
-		final Set<Set<Long>> primePairSets = new HashSet<Set<Long>>();
-		for (final Long key : map.keySet()) {
-
-			final Set<Long> set1 = new HashSet<Long>(map.get(key));
-			set1.add(key);
-
-			final Set<Long> intersection = new HashSet<Long>(set1);
-
-			for (final Long prime : set1) {
-				final Set<Long> set2 = new HashSet<Long>(map.get(prime));
-				set2.add(prime);
-				intersection.retainAll(set2);
-			}
-
-			if( intersection.size() == 5 ) {
-				primePairSets.add(intersection);
-			}
-
-		}
-
-
-
-
-
-
-
-
-
-
-		System.out.println("PAIR SETS WTIH 5 PRIMES FOUND in: " + (System.currentTimeMillis() - startTime) + " milliseconds");
-
-		long lowestTotal = 1000000000L; //Arbitrarily Large
-
-		for (final Set<Long> primes : primePairSets) {
-			long currentTotal = 0L;
-			for (final Long prime : primes) {
-				currentTotal += prime;
-			}
-
-			if(currentTotal < lowestTotal) {
-				System.out.println(primes.toString());
-				lowestTotal = currentTotal;
-			}
+		long lowestTotal = 0;
+		for (final Long prime : primePairSets.get(0) ) {
+			lowestTotal += prime;
 		}
 
 		return lowestTotal;
 	}
 
-	private static long calculateSolution2() {
-		final List<Long> allPrimes = PrimeGenerator.getPrimesUnder(10000);
-		allPrimes.remove(2L); //Even numbers aren't prime.
-		allPrimes.remove(5L); //Numbers ending with a 5 aren't prime.
-		final int allPrimesSize = allPrimes.size();
-
-		final boolean[][] hasProperty = new boolean[10000][10000];
-
-		System.out.println("GENERATED PRIMES in: " + (System.currentTimeMillis() - startTime) + " milliseconds");
-
+	/**
+	 * This method compares every prime in the allPrimes list with all the primes higher than it in the list.
+	 * It checks if the pair of primes has the desired property and if they do:
+	 *  1. Stores the pair as a list in the returned data structure
+	 *  2. Stores the fact the pair has the desired property in the hasProperty array.
+	 */
+	private static List<List<Long>> computeCardinality2PrimePairSetsAndStorePrimalities() {
 		final List<List<Long>> primePairSetsWith2Primes = new ArrayList<List<Long>>();
 
 		for( int a = 0; a < allPrimesSize; a++ ) {
@@ -144,43 +82,21 @@ public class PrimePairSets {
 				}
 			}
 		}
+		return primePairSetsWith2Primes;
+	}
 
-		System.out.println("GENERATED PRIME PAIR SETS WITH CARDINALITY 2 in: " + (System.currentTimeMillis() - startTime) + " milliseconds");
+	/**
+	 * This assumes the hasProperty array has been populated.
+	 * 
+	 * Takes the primePairSets and checks each set with each prime and uses the hasProperty map
+	 * to check if for each entry in the list combined with each prime, the pair has the desired
+	 * property.
+	 */
+	private static List<List<Long>> computeNextCardinalPrimePairSets(final List<List<Long>> primePairSets) {
+		final List<List<Long>> primePairSetsToReturn = new ArrayList<List<Long>>();
 
-		final List<List<Long>> primePairSetsWith3Primes = new ArrayList<List<Long>>();
-
-		for( int a = 0; a < primePairSetsWith2Primes.size(); a++ ) {
-			final List<Long> primePairSet = primePairSetsWith2Primes.get(a);
-
-			for( int b = 0; b < allPrimesSize; b++ ) {
-				final long prime = allPrimes.get(b);
-
-				if( primePairSet.contains(prime) ) {
-					continue;
-				}
-
-				boolean hasPropertyWithAllPrimesInSet = true;
-				for (final Long primeInSet : primePairSet) {
-					if( !( hasProperty[primeInSet.intValue()][(int)prime] ) ) {
-						hasPropertyWithAllPrimesInSet = false;
-						break;
-					}
-				}
-				if( hasPropertyWithAllPrimesInSet ) {
-					final List<Long> primePair = new ArrayList<Long>(primePairSet);
-					primePair.add(prime);
-					//					System.out.println(primePair.toString());
-					primePairSetsWith3Primes.add(primePair);
-				}
-			}
-		}
-
-		System.out.println("GENERATED PRIME PAIR SETS WITH CARDINALITY 3 in: " + (System.currentTimeMillis() - startTime) + " milliseconds");
-
-		final List<List<Long>> primePairSetsWith4Primes = new ArrayList<List<Long>>();
-
-		for( int a = 0; a < primePairSetsWith3Primes.size(); a++ ) {
-			final List<Long> primePairSet = primePairSetsWith3Primes.get(a);
+		for( int a = 0; a < primePairSets.size(); a++ ) {
+			final List<Long> primePairSet = primePairSets.get(a);
 
 			for( int b = 0; b < allPrimesSize; b++ ) {
 				final long prime = allPrimes.get(b);
@@ -199,58 +115,11 @@ public class PrimePairSets {
 				if( hasPropertyWithAllPrimesInSet ) {
 					final List<Long> primePair = new ArrayList<Long>(primePairSet);
 					primePair.add(prime);
-					//					System.out.println(primePair.toString());
-					primePairSetsWith4Primes.add(primePair);
+					primePairSetsToReturn.add(primePair);
 				}
 			}
 		}
 
-		System.out.println("GENERATED PRIME PAIR SETS WITH CARDINALITY 4 in: " + (System.currentTimeMillis() - startTime) + " milliseconds");
-
-		final List<List<Long>> primePairSetsWith5Primes = new ArrayList<List<Long>>();
-
-		for( int a = 0; a < primePairSetsWith4Primes.size(); a++ ) {
-			final List<Long> primePairSet = primePairSetsWith4Primes.get(a);
-
-			for( int b = 0; b < allPrimesSize; b++ ) {
-				final long prime = allPrimes.get(b);
-
-				if( primePairSet.contains(prime) ) {
-					continue;
-				}
-
-				boolean hasPropertyWithAllPrimesInSet = true;
-				for (final Long primeInSet : primePairSet) {
-					if( !( hasProperty[primeInSet.intValue()][(int)prime] ) ) {
-						hasPropertyWithAllPrimesInSet = false;
-						break;
-					}
-				}
-				if( hasPropertyWithAllPrimesInSet ) {
-					final List<Long> primePair = new ArrayList<Long>(primePairSet);
-					primePair.add(prime);
-					//					System.out.println(primePair.toString());
-					primePairSetsWith5Primes.add(primePair);
-				}
-			}
-		}
-
-		System.out.println("GENERATED PRIME PAIR SETS WITH CARDINALITY 5 in: " + (System.currentTimeMillis() - startTime) + " milliseconds");
-
-		long lowestTotal = 1000000000L; //Arbitrarily Large
-
-		for (final List<Long> primes : primePairSetsWith5Primes) {
-			long currentTotal = 0L;
-			for (final Long prime : primes) {
-				currentTotal += prime;
-			}
-
-			if(currentTotal < lowestTotal) {
-				System.out.println(primes.toString());
-				lowestTotal = currentTotal;
-			}
-		}
-
-		return lowestTotal;
+		return primePairSetsToReturn;
 	}
 }
