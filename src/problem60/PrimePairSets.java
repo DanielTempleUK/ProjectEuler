@@ -37,7 +37,7 @@ public class PrimePairSets {
 	private static long calculateSolution() {
 		//Guessed the primes in the set would be less that 10000.
 		allPrimes = PrimeGenerator.getPrimesUnder(10000);
-		//Storing this size avoids ahving to recalculate it as we use it for a loop limit quite a lot.
+		//Storing this size avoids having to recalculate it as we use it for a loop limit quite a lot.
 		allPrimesSize = allPrimes.size();
 
 		List<List<Long>> primePairSets = computeCardinality2PrimePairSetsAndStorePrimalities();
