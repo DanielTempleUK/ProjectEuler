@@ -28,7 +28,7 @@ public class TriangularPentagonalAndHexagonal {
 		long triangularNumber = 40755;
 		for ( long i = 286; i > 0; i++ ) {
 			triangularNumber += i;
-			if( NumberChecker.isPentagonal(triangularNumber) && NumberChecker.isHexagonal(triangularNumber) ) {
+			if( NumberChecker.isPentagonalNumber(triangularNumber) && NumberChecker.isHexagonalNumber(triangularNumber) ) {
 				return triangularNumber;
 			}
 		}
