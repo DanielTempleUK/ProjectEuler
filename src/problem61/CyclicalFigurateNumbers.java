@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utilities.NumberChecker;
+import utilities.Permutations;
 
 /**
  * Solution to problem 61:
@@ -81,9 +82,9 @@ public class CyclicalFigurateNumbers {
 				octagonalNumbers.add(i);
 			}
 		}
-		long solution = findSolutionsWithListsInThisOrder(0, 1, 2, 3, 4, 5);
+		long solution = 0;
 
-		final int[][] indicesArray = generatePermutationsForListOfListIndices();
+		final int[][] indicesArray = Permutations.generatePermutationsAsInArray("012345");
 		int i = 0;
 		while( solution == 0 ) {
 			i++;
@@ -94,35 +95,16 @@ public class CyclicalFigurateNumbers {
 		return solution;
 	}
 
-	private static final int[][] generatePermutationsForListOfListIndices() {
-		final int[][] permutations = new int[720][6];
-
-		int i = 0;
-		for (int a = 0; a < 6; a++) {
-			for (int b = 0; b < 6; b++) {
-				for (int c = 0; c < 6; c++) {
-					for (int d = 0; d < 6; d++) {
-						for (int e = 0; e < 6; e++) {
-							for (int f = 0; f < 6; f++) {
-								if( a!=b && a!=c && a!=d && a!=e && a!=f &&
-										b!=c && b!=d && b!=e && b!=f &&
-										c!=d && c!=e && c!=f &&
-										d!=e && d!=f &&
-										e!=f ) {
-									permutations[i] = new int[]{a,b,c,d,e,f};
-									i++;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		return permutations;
-	}
-
-
+	/**
+	 * This is what does all the work.
+	 * 
+	 * With the populated lists of all polygonal numbers in a list of lists, we take in the order in which to look at the lists.
+	 * if the indices come in the in the order 1 2 3 4 5 6, then we would look for a triangular number that links to a square number
+	 * that links to a pentagonal number, then a hexagonal number, heptagonal number and finally an octagonal number.
+	 * 
+	 * If the indices came in the in the order 6 5 4 3 2 1 we would look for an octagonal number first that links to a heptagonal number
+	 * and so on.
+	 */
 	private static final long findSolutionsWithListsInThisOrder(
 			final int index1, final int index2, final int index3, final int index4, final int index5, final int index6 ) {
 
@@ -162,6 +144,7 @@ public class CyclicalFigurateNumbers {
 								if( triangularNumberString.startsWith(octagonalNumberSuffix) ) {
 									System.out.println("" + triangularNumber + " " + squareNumber + " " + pentagonalNumber +
 											" " + hexagonalNumber + " " + heptagonalNumber + " " + octagonalNumber);
+									System.out.println("" + index1 + "" + index2 + "" + index3 + "" + index4 + "" + index5 + "" + index6);
 									return triangularNumber + squareNumber + pentagonalNumber + hexagonalNumber + heptagonalNumber + octagonalNumber;
 								}
 
@@ -175,6 +158,9 @@ public class CyclicalFigurateNumbers {
 		return 0L;
 	}
 
+	/**
+	 * Returns a list of all the numbers in the numbers list that start with the given prefix.
+	 */
 	private static List<Long> getAllNumbersWithPrefix( final List<Long> numbers, final String prefix ) {
 		final List<Long> numbersToReturn = new ArrayList<Long>();
 		for (final Long number : numbers) {

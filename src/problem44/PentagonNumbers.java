@@ -3,6 +3,8 @@ package problem44;
 import java.util.ArrayList;
 import java.util.List;
 
+import utilities.NumberChecker;
+
 /**
  * Solution to problem 44:
  * 
@@ -40,18 +42,13 @@ public class PentagonNumbers {
 			for (final Long long2 : numbers) {
 				final long sum = long1 + long2;
 				final long difference = Math.abs(long1 - long2);
-				if( isPentagonal(sum) && isPentagonal(difference) && difference < smallestDifference) {
+				if( NumberChecker.isPentagonalNumber(sum) && NumberChecker.isPentagonalNumber(difference) && difference < smallestDifference) {
 					smallestDifference = Integer.valueOf((int) difference);
 				}
 			}
 		}
 
 		return smallestDifference;
-	}
-
-	private static boolean isPentagonal(final long x) {
-		final double n = ((Math.sqrt((24 * x) + 1)) + 1) / 6;
-		return n % 1 == 0;
 	}
 
 	private static List<Long> generatePentagonalNumbersUnder(final long l) {
