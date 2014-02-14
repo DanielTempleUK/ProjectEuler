@@ -84,7 +84,7 @@ public class CyclicalFigurateNumbers {
 		}
 		long solution = 0;
 
-		final int[][] indicesArray = Permutations.generatePermutationsAsInArray("012345");
+		final int[][] indicesArray = Permutations.generatePermutationsAsIntArray("012345");
 		int i = 0;
 		while( solution == 0 ) {
 			i++;

@@ -26,7 +26,7 @@ public class Permutations {
 		}
 	}
 
-	public static final int[][] generatePermutationsAsInArray( final String input ) {
+	public static final int[][] generatePermutationsAsIntArray( final String input ) {
 		final List<String> permutationsOfInput = getPermutationsOf(input);
 
 		final int[][] returnArray = new int[permutationsOfInput.size()][input.length()];
