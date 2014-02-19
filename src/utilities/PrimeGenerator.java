@@ -35,7 +35,7 @@ public class PrimeGenerator {
 		final List<Long> primesList = new ArrayList<Long>();
 
 		for (int i = 0; i<upperLimit; i++) {
-			if( primes[i] && i > lowerLimit ) {
+			if( primes[i] && i >= lowerLimit ) {
 				primesList.add( (long) i );
 			}
 		}
