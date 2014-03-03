@@ -40,7 +40,7 @@ public class PrimePermutations {
 				final Long prime1 = primes.get(i);
 				final Long prime2 = primes.get(j);
 
-				//Ignore the case w eknow about
+				//Ignore the case we know about
 				if(1487 == prime1) {
 					continue;
 				}

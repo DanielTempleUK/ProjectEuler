@@ -46,6 +46,10 @@ public class Hand {
 	/**
 	 * If we get here, we know that the hands are both of the same type.
 	 * This is assumed within the logic of this method.
+	 * 
+	 * NOTE: I went through and added in the logic one hand type at a time.
+	 *       It transpired I only needed to cater for the high card scenario
+	 *       in the one pair and high card hand types to get the correct answer.
 	 */
 	private boolean beatsInHighCardScenario(final Hand player2Hand) {
 		final HandType player1HandType = convertHand();
