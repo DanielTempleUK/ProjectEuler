@@ -35,11 +35,11 @@ public class OddPeriodSquareRoots {
 	 * From the root(23) example, I was able to derive the following trace table:
 	 * 
 	 * 	iter	den		nonSurd		periodDigit
-	 * 	a1		7		3			1
-	 * 	a2		2		3			3
-	 * 	a3		7		4			4
-	 * 	a4		1		4			8
-	 * 	a5		7		3			1
+	 * 	 a1		 7		   3			1
+	 * 	 a2		 2		   3			3
+	 * 	 a3		 7		   4			1
+	 * 	 a4		 1		   4			8
+	 * 	 a5		 7		   3			1
 	 * 
 	 * The periodDigits could repeat, so I check existence of the "den,nonSurd" string.
 	 */
