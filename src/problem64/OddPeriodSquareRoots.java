@@ -78,6 +78,8 @@ public class OddPeriodSquareRoots {
 			}
 			while ( combinationsSeen.add(den + "," + nonSurd) );
 
+			System.out.println("n=" + n + " periodSize=" + periodDigits.size());
+
 			//Increase count if the period size is odd. Remove 1 from period size as extra period digit is added from next loop.
 			if( (periodDigits.size()-1) % 2 == 1 ) {
 				count++;
