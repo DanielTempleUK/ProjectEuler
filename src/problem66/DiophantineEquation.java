@@ -43,116 +43,85 @@ public class DiophantineEquation {
 	}
 
 	private static Long calculateSolution() {
-
+		//First derive the list of D values that are not square
 		final List<Integer> dValues = new ArrayList<Integer>();
 
-		//TODO: Should be 1000
-		for (int i = 1; i <= 7; i++) {
+		for (int i = 1; i <= 1000; i++) {
 			if( NumberChecker.isSquareNumber(i) ) {
 				continue;
 			}
 			dValues.add(i);
 		}
 
-		System.out.println("Got the D values");
-
+		//Define some values to hold the current best known solution
 		BigDecimal highestX = BigDecimal.ZERO;
 		long solution = 0L;
 
+		/*
+		 * Algorithm is:
+		 * 		Find the period digits
+		 * 		Use the convergents of root(D) to find the smallest x that solves Pell's Equation
+		 * 		Check the x value against the current best answer.
+		 */
 		for (final Integer d : dValues) {
-
-			final int nearestSquare = findClosestSquare(d);
 			final List<Integer> periodDigits = getPeriodDigits(d);
 
-			if( periodDigits.size() <= 2 ) {
-				long xSquared = -1;
-				long y = 0;
-				while ( !NumberChecker.isSquareNumber(xSquared) ) {
-					y++;
-					final long ySquared = y * y;
-					final long ySquaredTimesD = ySquared * d;
-					xSquared = ySquaredTimesD + 1;
-				}
-
-				final double x = Math.sqrt(xSquared);
-				System.out.println((int)x + "^2 - " + d + "*(" + y + "^2) = 1");
-				if( x > highestX.intValue() ) {
-					highestX = BigDecimal.valueOf(x);
-					solution = d;
-				}
+			final BigDecimal bN = useConvergentsOfRootDToFindMinimumX(d, periodDigits);
+			if( bN.compareTo(highestX) > 0 ) {
+				highestX = bN;
+				solution = d;
 			}
-			else {
-
-				int index=2;
-
-				BigDecimal aMinus2 = BigDecimal.ZERO;
-				BigDecimal aMinus1 = BigDecimal.valueOf(nearestSquare);
-				BigDecimal aN = BigDecimal.valueOf(periodDigits.get(index)).multiply(aMinus1).add(aMinus2);
-
-				BigDecimal bMinus2 = BigDecimal.ONE;
-				BigDecimal bMinus1 = BigDecimal.valueOf(nearestSquare);
-				BigDecimal bN = BigDecimal.valueOf(periodDigits.get(index)).multiply(bMinus1).add(bMinus2);
-
-				BigDecimal subtract = aN.pow(2).subtract( bN.pow(2).multiply(BigDecimal.valueOf(d)) );
-				index++;
-
-				while( ( subtract.longValue() != 1L ) && ( index < periodDigits.size() ) ) {
-
-					aMinus2 = aMinus1;
-					aMinus1 = aN;
-					aN = BigDecimal.valueOf(periodDigits.get(index)).multiply(aMinus1).add(aMinus2);
-
-					bMinus2 = bMinus1;
-					bMinus1 = bN;
-					bN = BigDecimal.valueOf(periodDigits.get(index)).multiply(bMinus1).add(bMinus2);
-
-					subtract = aN.pow(2).subtract( bN.pow(2).multiply(BigDecimal.valueOf(d)) );
-					index++;
-				}
-				System.out.println(bN + "^2 - " + d + "*(" + aN + "^2) = 1");
-				if( bN.compareTo(highestX) > 0 ) {
-					highestX = bN;
-					solution = d;
-				}
-			}
-
-
 		}
 
 		return solution;
-
-		//		final Map<Long, Integer> map = new HashMap<Long, Integer>();
-		//
-		//		for (final Integer d : dValues) {
-		//			long xSquared = -1;
-		//			long y = 0;
-		//			while ( !NumberChecker.isSquareNumber(xSquared) ) {
-		//				y++;
-		//				final long ySquared = y * y;
-		//				final long ySquaredTimesD = ySquared * d;
-		//				xSquared = ySquaredTimesD + 1;
-		//			}
-		//
-		//			final double x = Math.sqrt(xSquared);
-		//			System.out.println("D=" + d + ", x=" + (long)x + ", y=" + y);
-		//			map.put((long)x, d);
-		//		}
-		//
-		//		final List<Long> xValues = new ArrayList<Long>(map.keySet());
-		//		Collections.sort(xValues);
-		//		Collections.reverse(xValues);
-		//		return map.get(xValues.get(0));
 	}
 
+	/**
+	 * I spent ages looking at the convergent series of continued fractions.
+	 * I knew from problem 64 and problem 65 that I could generate convergents given the period digits.
+	 * Some reading told me the numerator and denominator of the convergents would be solutions to Pell's
+	 * equations.
+	 * But this website gave me the initial values to use:
+	 * 		http://modular.math.washington.edu/edu/2007/spring/ent/ent-html/node60.html
+	 * 
+	 * Had to use BigDecimals as the x and y values quickly become greater than the maximum long value.
+	 */
+	private static BigDecimal useConvergentsOfRootDToFindMinimumX(final Integer d, final List<Integer> periodDigits) {
+		final int nearestSquare = findClosestSquare(d);
 
+		BigDecimal numerator1 = BigDecimal.ZERO;
+		BigDecimal numerator2 = BigDecimal.ONE;
+		BigDecimal numerator3 = BigDecimal.valueOf(nearestSquare);
+
+		BigDecimal denominator1 = BigDecimal.ONE;
+		BigDecimal denominator2 = BigDecimal.ZERO;
+		BigDecimal denominator3 = BigDecimal.ONE;
+
+		BigDecimal subtract = numerator3.pow(2).subtract( denominator3.pow(2).multiply(BigDecimal.valueOf(d)) );
+		int index = 0;
+
+		while( ( subtract.longValue() != 1L ) ) {
+			numerator1 = new BigDecimal(numerator2.toString());
+			numerator2 = new BigDecimal(numerator3.toString());
+			numerator3 = BigDecimal.valueOf(periodDigits.get(index)).multiply(numerator2).add( numerator1 );
+
+			denominator1 = new BigDecimal(denominator2.toString());
+			denominator2 = new BigDecimal(denominator3.toString());
+			denominator3 = BigDecimal.valueOf(periodDigits.get(index)).multiply(denominator2).add( denominator1 );
+
+			subtract = numerator3.pow(2).subtract( denominator3.pow(2).multiply(BigDecimal.valueOf(d)) );
+			index = (index + 1) % periodDigits.size(); //Just make sure to mod the index, so we avoid out of bounds errors
+		}
+
+		return numerator3;
+	}
+
+	/**
+	 * Reused this function from Problem 64's solution to acquire the set of period digits
+	 */
 	private static List<Integer> getPeriodDigits(final int n) {
-		//First find the nearest square number, this will give us a starting point for our fractions
 		final int nearestSquare = findClosestSquare(n);
-
-		//The first non surd in the numerator will be the period number
 		int nonSurd = nearestSquare;
-
-		//Set the first denominator to be 1
 		int den = 1;
 
 		//Initialise some collections to help the termination check and the period length check
@@ -160,33 +129,28 @@ public class DiophantineEquation {
 		final Set<String> combinationsSeen = new HashSet<String>();
 
 		do {
-			//The denominator is calculated from the conjugate cancelling the surd on the denominator
 			den = (n - (nonSurd*nonSurd)) / den;
 
-			//The period digit is then the number of denominators we can cancel from the integer part of the numerator (nearestSquare + nonSurd)
 			final int periodDigit = (nearestSquare + nonSurd) / den;
 			periodDigits.add(periodDigit);
 
-			//The nonSurd is then the period digit cancelled from the fraction. Keep this absolute to make the maths a bit easier. :)
 			nonSurd = Math.abs(nonSurd - (periodDigit * den));
 		}
 		while ( combinationsSeen.add(den + "," + nonSurd) );
 
+		//I should really rework the loop conditions so I don't need to remove the final period digit.
+		periodDigits.remove(periodDigits.size()-1);
 		return periodDigits;
-
 	}
 
+	/**
+	 * Reused this function from Problem 64's solution to find the nearest square number to a given number.
+	 */
 	private static int findClosestSquare(final int n) {
-		int closestSquare = 0;
-
 		for( int i = 0; true; i++ ) {
-			if( (i*i) < n ) {
-				closestSquare = i;
-				continue;
+			if( (i*i) > n ) {
+				return i-1;
 			}
-			break;
 		}
-
-		return closestSquare;
 	}
 }

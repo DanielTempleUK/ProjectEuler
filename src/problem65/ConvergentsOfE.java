@@ -22,6 +22,9 @@ public class ConvergentsOfE {
 	 * Given the period sequence, I did some pattern analysis on the numerators and denominators to
 	 * find that the pattern is add the previous 2 together where the previous period is 1, or
 	 * multiply previous 1 by the period and add other previous 1 (i-2) to that.
+	 * Taking into account the fact that the period is 1 when the it is not some multiple of 2,
+	 * I was able to just multiple by the period digit every time (which turns out to be the actual
+	 * sequence algorithm)
 	 * 
 	 * From here it was quite simple to get the answer by generating the subsequent numerators.
 	 */
@@ -44,13 +47,8 @@ public class ConvergentsOfE {
 		numerators[1] = BigInteger.valueOf(3L);
 
 		for (int i = 2; i < 100; i++) {
-			final long period = periodDigits[i-1];
-			if( period > 1 ) {
-				numerators[i] = numerators[i-1].multiply(BigInteger.valueOf(period)).add(numerators[i-2]);
-			}
-			else {
-				numerators[i] = numerators[i-1].add(numerators[i-2]);
-			}
+			final BigInteger periodBD = BigInteger.valueOf(periodDigits[i-1]);
+			numerators[i] = numerators[i-1].multiply(periodBD).add(numerators[i-2]);
 		}
 
 		long sum = 0L;

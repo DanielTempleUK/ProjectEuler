@@ -78,8 +78,6 @@ public class OddPeriodSquareRoots {
 			}
 			while ( combinationsSeen.add(den + "," + nonSurd) );
 
-			System.out.println("n=" + n + " periodSize=" + periodDigits.size());
-
 			//Increase count if the period size is odd. Remove 1 from period size as extra period digit is added from next loop.
 			if( (periodDigits.size()-1) % 2 == 1 ) {
 				count++;
@@ -90,16 +88,10 @@ public class OddPeriodSquareRoots {
 	}
 
 	private static int findClosestSquare(final int n) {
-		int closestSquare = 0;
-
 		for( int i = 0; true; i++ ) {
-			if( (i*i) < n ) {
-				closestSquare = i;
-				continue;
+			if( (i*i) > n ) {
+				return i-1;
 			}
-			break;
 		}
-
-		return closestSquare;
 	}
 }
