@@ -1,6 +1,10 @@
 package problem70;
 
 import java.io.IOException;
+import java.util.Set;
+
+import utilities.FactorUtils;
+import utilities.Permutations;
 
 /**
  * Solution to problem 70:
@@ -27,15 +31,42 @@ public class TotientPermutation {
 		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
+	/**
+	 * Super dooper brute force.
+	 * Takes ~20 seconds though.
+	 */
 	private static long calculateSolution() {
+		long currentSolution = 0;
+		double currentRatio = 10000000;
 
+		/* We want to minimise the number over the totient, so we want the bggest totient possible.
+		 * Therefore we consider odd numbers only. Odd numbers have more chance of having more co primes
+		 * as more of the even numbers are included due to the lack of 2 as a common factor.
+		 */
+		for( long i = 9999999; i > 0; i=i-2 ) {
 
+			final Set<Long> primeFactorise = FactorUtils.getUniqePrimeFactorsOf(i);
+			double totient = i;
 
+			for (final Long factor : primeFactorise) {
+				final double factorMinus1 = factor-1;
+				totient *= factorMinus1;
+				totient /= factor;
+			}
 
+			final double ratio = i/totient;
+			if( ratio < currentRatio ) {
+				//Perform the permutation check after the ratio check as it is a longer check to perform
+				if( Permutations.permutationCheck(i, (long)totient) ) {
+					//					System.out.println("i = " + i);
+					//					System.out.println("totient = " + totient);
+					//					System.out.println("ratio = " + ratio);
+					currentSolution = i;
+					currentRatio = ratio;
+				}
+			}
+		}
 
-
-
-
-		return 0L;
+		return currentSolution;
 	}
 }

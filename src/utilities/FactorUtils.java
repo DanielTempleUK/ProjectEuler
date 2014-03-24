@@ -1,7 +1,12 @@
 package utilities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class FactorUtils {
+
+	private static final String FACTOR_DELIMITER = "X";
 
 	/**
 	 * Returns the smallest prime factor of the provided value
@@ -64,6 +69,22 @@ public class FactorUtils {
 		if (n==minFactor) {
 			return "" + n;
 		}
-		return minFactor + "X" + primeFactorise(n/minFactor);
+		return minFactor + FACTOR_DELIMITER + primeFactorise(n/minFactor);
+	}
+
+	/**
+	 * Returns a set of the prime factors of the provided value.
+	 * 
+	 * Importantly, is the number is 2*2*2*2*2*5*5*5*5*5*5,
+	 * then the set will contain 2 and 5
+	 */
+	public static Set<Long> getUniqePrimeFactorsOf(final long n){
+		final String string = primeFactorise(n);
+		final String[] split = string.split(FACTOR_DELIMITER);
+		final Set<Long> factors = new HashSet<Long>();
+		for (final String factor : split) {
+			factors.add(Long.valueOf(factor));
+		}
+		return factors;
 	}
 }

@@ -1,6 +1,7 @@
 package utilities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Permutations {
@@ -44,5 +45,16 @@ public class Permutations {
 		}
 
 		return returnArray;
+	}
+
+	/**
+	 * Checks that two provided numbers are permutations of one another.
+	 */
+	public static final boolean permutationCheck(final long number1, final long number2) {
+		final char[] charArray1 = (""+number1).toCharArray();
+		Arrays.sort(charArray1);
+		final char[] charArray2 = (""+number2).toCharArray();
+		Arrays.sort(charArray2);
+		return Arrays.equals(charArray1, charArray2);
 	}
 }
