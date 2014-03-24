@@ -1,11 +1,8 @@
 package problem3;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import utilities.PrimalityChecker;
+import utilities.FactorUtils;
 
 /**
  * Solution to problem 3:
@@ -25,26 +22,7 @@ public class HighestPrimeFactor {
 	}
 
 	private static long calculateSolution() throws IOException {
-		final List<Long> primeFactors = findPrimeFactors(600851475143L);
-		Collections.sort(primeFactors);
-		return primeFactors.get(primeFactors.size()-1);
-	}
-
-	private static List<Long> findPrimeFactors(final long input) {
-		final List<Long> primeFactors = new ArrayList<Long>();
-
-		double d = input;
-		long i = 2;
-		while( d > 1) {
-			if( ( (d/i) % 1 ) == 0 ) {
-				if(PrimalityChecker.isPrime(i)) {
-					primeFactors.add(i);
-					d = d / i;
-				}
-			}
-			i++;
-		}
-
-		return primeFactors;
+		final String[] primeFactors = FactorUtils.primeFactorise(600851475143L).split("X");
+		return Long.valueOf( primeFactors[primeFactors.length-1] );
 	}
 }

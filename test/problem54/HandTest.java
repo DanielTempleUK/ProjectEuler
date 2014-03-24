@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class TestWoo {
+public class HandTest {
 
 	@Test
 	public void testRoyalFlush() {

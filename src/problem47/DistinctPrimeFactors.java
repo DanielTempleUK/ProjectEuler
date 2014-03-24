@@ -2,10 +2,9 @@ package problem47;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import utilities.PrimeGenerator;
+import utilities.FactorUtils;
 
 /**
  * Solution to problem 47:
@@ -26,8 +25,6 @@ import utilities.PrimeGenerator;
  */
 public class DistinctPrimeFactors {
 
-	private static List<Long> primes;
-
 	public static void main(final String[] args) throws IOException {
 		final long startTime = System.currentTimeMillis();
 
@@ -38,8 +35,6 @@ public class DistinctPrimeFactors {
 	}
 
 	private static long calculateSolution() {
-		primes = PrimeGenerator.getPrimesUnder(1000000);
-
 		Set<Long> primeFactors1 = findPrimeFactors(644);
 		Set<Long> primeFactors2 = findPrimeFactors(645);
 		Set<Long> primeFactors3 = findPrimeFactors(646);
@@ -63,22 +58,13 @@ public class DistinctPrimeFactors {
 	}
 
 	private static Set<Long> findPrimeFactors(final long input) {
-		final Set<Long> primeFactors = new HashSet<Long>();
+		final String[] primeFactors = FactorUtils.primeFactorise(input).split("X");
+		final Set<Long> primeFactorsSet = new HashSet<Long>();
 
-		double d = input;
-		long i = 0;
-
-		while( d > 1) {
-			final Long prime = primes.get((int)i);
-			if( (  ( (d/prime) % 1 ) == 0  ) ) {
-				primeFactors.add(i);
-				d = d / prime;
-				i = 0;
-				continue;
-			}
-			i++;
+		for (final String primeFactor : primeFactors) {
+			primeFactorsSet.add(Long.valueOf(primeFactor));
 		}
 
-		return primeFactors;
+		return primeFactorsSet;
 	}
 }
