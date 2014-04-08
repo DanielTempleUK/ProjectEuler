@@ -41,7 +41,7 @@ public class OrderedFractions {
 	 * 		((3*b) - 1) / 7
 	 * 
 	 * The "-1" is thrown in because we are dealing with integers, so we know that the minimum difference is 1.
-	 * We also know that we want an integer out as the numerator, so we can simply throw a floor function in.
+	 * We also know that we want an integer out as the numerator, so we can simply throw a floor function in (implicit cast to long).
 	 * 
 	 * Then we sort the fractions using the same inequality rules and then take the second to last one, the last one will be 3/7
 	 */

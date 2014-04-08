@@ -24,8 +24,8 @@ public class Magic5GonRing {
 	 * Using all the permutations, we can arrange the indexes in this order:
 	 * 	012,324,546,768,981
 	 * 
-	 * Then using that arrangement, we can get the reulsting numbers form all the permutations of 0-9 (increment them by 1)
-	 * And ensure they confirm to the desired result constraints.
+	 * Then using that arrangement, we can get the resulting numbers from all the permutations of 0-9 (increment them by 1)
+	 * And ensure they conform to the desired result constraints.
 	 */
 	private static String calculateSolution() {
 		String currentHighest = "0";

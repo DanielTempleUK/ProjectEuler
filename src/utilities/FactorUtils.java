@@ -3,7 +3,6 @@ package utilities;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class FactorUtils {
 
 	private static final String FACTOR_DELIMITER = "X";
@@ -75,7 +74,7 @@ public class FactorUtils {
 	/**
 	 * Returns a set of the prime factors of the provided value.
 	 * 
-	 * Importantly, is the number is 2*2*2*2*2*5*5*5*5*5*5,
+	 * Importantly, if the number is 2*2*2*2*2*5*5*5*5*5*5,
 	 * then the set will contain 2 and 5
 	 */
 	public static Set<Long> getUniqePrimeFactorsOf(final long n){
@@ -86,5 +85,29 @@ public class FactorUtils {
 			factors.add(Long.valueOf(factor));
 		}
 		return factors;
+	}
+
+	public static long getHighestCommonFactor(final long n, final long m) {
+		long highest = n;
+		long lowest = m;
+		if( m > n ) {
+			highest=m;
+			lowest=n;
+		}
+
+		final String nString = primeFactorise(lowest);
+		final String[] nSplit = nString.split(FACTOR_DELIMITER);
+
+		long hcf = 1L;
+
+		for (final String factorString : nSplit) {
+			final long factor = Long.valueOf(factorString);
+			final double div = (double)highest / (double)factor;
+			if( ( div % 1 ) == 0 ) {
+				hcf = factor;
+			}
+		}
+
+		return hcf;
 	}
 }

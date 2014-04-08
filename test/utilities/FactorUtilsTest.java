@@ -10,10 +10,8 @@ public class FactorUtilsTest {
 	@Test
 	public void thatFactorisingWorks() {
 		final long n = 600851475143L;
-		final long time = System.currentTimeMillis();
 		final String factor = FactorUtils.primeFactorise(n);
-		System.err.println((System.currentTimeMillis() - time) + " To Factor");
-		assertThat(factor, is("71*839*1471*6857"));
+		assertThat(factor, is("71X839X1471X6857"));
 	}
 
 	@Test
@@ -45,5 +43,18 @@ public class FactorUtilsTest {
 		n = 600851475143L;
 		leastFactor = FactorUtils.smallestPrimeFactor(n);
 		assertThat(leastFactor, is(71L));
+	}
+
+	@Test
+	public void thatHighestCommonFactorWorks() {
+		long n = 23*13*7;
+		long m = 23*13*9;
+		long highestCommonFactor = FactorUtils.getHighestCommonFactor(n, m);
+		assertThat(highestCommonFactor, is(23L));
+
+		n = 2*7*53;
+		m = 23*13*9;
+		highestCommonFactor = FactorUtils.getHighestCommonFactor(n, m);
+		assertThat(highestCommonFactor, is(1L));
 	}
 }
