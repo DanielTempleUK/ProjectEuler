@@ -2,9 +2,11 @@ ProjectEuler
 ============
 
 Solutions for the Project Euler problems that I done solved.
-Code I produce is in java and is probably not the greatest ever produced, but the solutions do work.
+The code I produce is in java and is probably not the greatest ever produced, but the solutions do work and I try to explain what I'm doing in comments.
 
-[Achieved level 2 by completing the first 50 problems. Boom Town!](http://projecteuler.net/profile/DanTempleUK.png)
+[Achieved level 3 by completing the first 75 problems. Very happy!](http://projecteuler.net/profile/DanTempleUK.png)
 
-Wow! These have gotten much harder since Problem 60.
-Although I just solved my first puzzle that less than 10,000 people have solved. Quite happy with that.
+Solving the problems it numerical order, I'm finding some of these problems are really hard, and some are super easy.
+It's a bizarre mixed bag, but it does keep it enjoyable and challenging.
+
+I just solved a problem that less than 9000 people have solved! =D
