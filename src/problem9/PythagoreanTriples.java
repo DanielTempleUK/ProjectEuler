@@ -1,5 +1,10 @@
 package problem9;
 
+import java.util.Set;
+
+import utilities.PythagoreanTriple;
+import utilities.PythagoreanTriplesGenerator;
+
 /**
  * Solution to Problem 9:
  * 
@@ -12,7 +17,15 @@ package problem9;
  */
 public class PythagoreanTriples {
 
+	/**
+	 * This is a rare problem where I've produced extra solutions given the work I did on later problems.
+	 */
 	public static void main(final String[] args) {
+		solution1();
+		solution2();
+	}
+
+	private static void solution1() {
 		final long startTime = System.currentTimeMillis();
 
 		System.out.println("The answer is: " + calculateSolution());
@@ -21,8 +34,20 @@ public class PythagoreanTriples {
 		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
-	private static long calculateSolution()  {
+	private static void solution2() {
+		final long startTime = System.currentTimeMillis();
 
+		System.out.println("The answer is: " + calculateSolution2());
+
+		final long endTime = System.currentTimeMillis();
+		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
+	}
+
+	/**
+	 * This solution uses the a<b<c inequality to choose ranges for each of the values.
+	 * A time saving trick is that c can be generated once a and b are known.
+	 */
+	private static long calculateSolution()  {
 		for( int a = 1; a < 333; a++ ) {
 			for( int b = a+1; b < 500; b++ ) {
 
@@ -30,6 +55,34 @@ public class PythagoreanTriples {
 				if( (a*a) + (b*b) == (c*c) ) {
 					return (a * b * c);
 				}
+			}
+		}
+
+		return 0L;
+	}
+
+	/**
+	 * This solution relies on generating all of the primitive triples below total length of 1000.
+	 * Then we simply loop through them and find the one where the total length is 1000.
+	 * 
+	 * As it happens, there is no primitive triple with a total length of 1000, so I had to be a little clever
+	 * and check if the 1000 limit divided evenly by the actual total length.
+	 * 
+	 * Even with having that extra check, this is the quicker of the two solutions.
+	 */
+	private static long calculateSolution2()  {
+
+		final Set<PythagoreanTriple> generatePrimitivePythagoreanTriplesWithLengthLessThan =
+				PythagoreanTriplesGenerator.generatePrimitivePythagoreanTriplesWithLengthLessThan(1000L);
+
+		for (final PythagoreanTriple triple : generatePrimitivePythagoreanTriplesWithLengthLessThan) {
+			if( triple.getTotalLength() == 1000 ) {
+				return triple.getA() * triple.getB() * triple.getC();
+			}
+
+			final double ratio = (double)1000 / (double)triple.getTotalLength();
+			if( ratio == (long)ratio ) {
+				return triple.getA() * triple.getB() * triple.getC() * (long)ratio * (long)ratio * (long)ratio;
 			}
 		}
 

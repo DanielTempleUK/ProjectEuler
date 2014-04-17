@@ -1,4 +1,4 @@
-package problem75;
+package utilities;
 
 public class PythagoreanTriple {
 
