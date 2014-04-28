@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -58,4 +59,42 @@ public class ReadFile {
 			return null;
 		}
 	}
+
+	/**
+	 * Assumes:
+	 *  - File is on multiple lines.
+	 *  - Each line is a single word
+	 *  - No delimiters
+	 *  - No Sorting
+	 */
+	public static List<String> readMultipleSingleWordLines( final String fileName ) {
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader( new FileReader( new File(fileName) ) );
+			String wordString = reader.readLine();
+
+			final List<String> wordsList = new ArrayList<String>();
+
+			while( wordString != null ) {
+				wordsList.add(wordString);
+				wordString = reader.readLine();
+			}
+
+			reader.close();
+
+			return wordsList;
+		}
+		catch (final FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+		catch (final IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+
+
+
 }
