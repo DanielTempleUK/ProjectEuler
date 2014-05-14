@@ -3,3 +3,11 @@
 .classpath
 .settings
 bin
+
+#Root project maven build files, you "shouldn't" need these for submodules if the project is set up correctly.
+target
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
