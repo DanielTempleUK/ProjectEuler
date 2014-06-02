@@ -16,13 +16,11 @@ public class FactorUtils {
 		if (n%3==0) return 3;
 		if (n%5==0) return 5;
 
-		final double m = Math.sqrt(n);
-
 		/* This loop is incredible.
 		 * It generates all the primes ever, with some extra numbers thrown in.
 		 * I'm going to work out why this works!
 		 */
-		for (int i=7;i<=m;i+=30) {
+		for (int i=7; i*i <= n ;i+=30) {
 
 			if ( n % i == 0 ) {
 				return i;
