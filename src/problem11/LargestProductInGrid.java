@@ -72,19 +72,30 @@ public class LargestProductInGrid {
 		System.out.println("The solution took: " + (endTime - startTime) + " milliseconds");
 	}
 
+	/*
+	 * Using the stored input array makes this problem a little easier.
+	 * We can then just traverse the first 17 X 17 grid in the 20 x 20 grid.
+	 * From each point in the smaller grid, we can consider the horizontal to the right, the
+	 * vertical down, the diagonal down to the right, and the diagonal down to the left (if
+	 * the x axis index is high enough [>3] )
+	 * 
+	 * Then we just keep all of the products and return the highest one by
+	 * sorting into ascending order and returning the last one.
+	 */
 	private static long calculateSolution() {
 		final List<Long> products = new ArrayList<Long>();
 
-		for (int i = 0; i<17; i++ ) {
-			for (int j = 0; j<17; j++ ) {
-				//horizontal
+		for (int i = 0; i < 17; i++ ) {
+			for (int j = 0; j < 17; j++ ) {
+				//horizontally to the right
 				products.add ( inputs[i][j] * inputs[i][j+1] * inputs[i][j+2] * inputs[i][j+3] );
-				//vertical
+				//vertically down
 				products.add ( inputs[i][j] * inputs[i+1][j] * inputs[i+2][j] * inputs[i+3][j] );
-				//diagonal Forward
+				//diagonally down to the right
 				products.add ( inputs[i][j] * inputs[i+1][j+1] * inputs[i+2][j+2] * inputs[i+3][j+3] );
-				if(j>3){
-					//diagonal backward
+
+				if( j > 3 ) {
+					//diagonal down to the left
 					products.add ( inputs[i][j] * inputs[i+1][j-1] * inputs[i+2][j-2] * inputs[i+3][j-3] );
 				}
 			}

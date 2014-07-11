@@ -22,8 +22,10 @@ public class PrimeSummation {
 	}
 
 	private static long calculateSolution() {
+		//Sieve of Eratosthenes to find the primes under 2 million.
 		final List<Long> primes = PrimeGenerator.getPrimesUnder(2000000);
 
+		//Loop through the list and add the primes up.
 		long total = 0;
 		for (final Long prime : primes) {
 			total += prime;

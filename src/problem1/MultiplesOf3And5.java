@@ -20,7 +20,10 @@ public class MultiplesOf3And5 {
 	private static long calculateSolution() {
 		long total = 0L;
 
+		//Set up a loop to check all of the numbers from 0 to 999 (numbers below 1000)
 		for ( int i = 0; i < 1000; i++) {
+
+			//If the number is a multiple of 3 or 5, then add it to the total.
 			if( i % 3 == 0 || i % 5 == 0 ) {
 				total += i;
 			}
